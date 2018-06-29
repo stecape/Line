@@ -1,72 +1,111 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 import Ramp from './components/Ramp'
 import TestPoint from './components/TestPoint'
 import Input from './components/Input'
+import Line from './components/Line'
 import Output from './components/Output'
+import SwitchNO from './components/SwitchNO'
+
 import './App.css'
 
 export default class App extends Component {
-  render() {
-    var yes = true
-    var no = false
-    var style = (green) => {
-      return {
-        color: green ? '#3fb855' : 'black',
-        fillColor: green ? '#3fb855' : 'black',
-        fill: green ? '#3fb855' : 'black',
-        stroke: green ? '#3fb855' : 'black'
-      }
+  constructor(props) {
+    super(props)
+    this.state = { 
+
     }
+  }
+
+  axiosFunc = () => {
+    axios.get('data.html').then(results => {
+      this.setState(results.data)
+    })
+  }
+
+  componentDidMount() {
+   this.axiosFunc()
+   this.interval = setInterval(this.axiosFunc, 1000)
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval)
+  }
+
+  render() {
+
+    var bool = (bool) => { return bool === "1" ? true : false }
+    
     return (
-			<svg width="800" height="600" viewBox="0 0 400 300" >
+			<svg width="1920" height="1080" viewBox="0 0 960 540" >
         <Input
           x={0}
           y={28}
-          green={yes}
+          green={true}
           textPosOffsetX={0}
           textPosOffsetY={0}
           varName="c"
-          varValue={3.0E8}
+          varValue={this.state.c}
         />
-        <line x1="24" y1="32" x2="70" y2="32" style={style(yes)} />
-        <Ramp
+        <Line x1="24" y1="32" x2="70" y2="32" green={true} />
+        <SwitchNO
           x={70}
+          y={26}
+          green={bool(this.state.enable)}
+          textPosOffsetX={0}
+          textPosOffsetY={0}
+          varName="enable"
+          varValue={bool(this.state.enable)}
+        />
+        <Line x1="82" y1="32" x2="120" y2="32" green={bool(this.state.enable)} />
+        <Ramp
+          x={120}
           y={20}
-          green={yes}
+          green={bool(this.state.enable)}
           textPosOffsetX={0}
           textPosOffsetY={0}
           varName="pi"
-          varValue={3.1415926}
+          varValue={this.state.pi}
         />
-        <line x1="94" y1="32" x2="144" y2="32" style={style(yes)} />
+        <Line x1="144" y1="32" x2="194" y2="32" green={bool(this.state.enable)} />
         <TestPoint
-          x={144}
+          x={194}
           y={26}
-          green={yes}
+          green={bool(this.state.enable)}
           textPosOffsetX={0}
           textPosOffsetY={0}
           varName="h"
-          varValue={6.626}
+          varValue={this.state.h}
         />
-        <line x1="156" y1="32" x2="206" y2="32" style={style(yes)} />
+        <Line x1="206" y1="32" x2="256" y2="32" green={bool(this.state.enable)} />
+        <SwitchNO
+          x={256}
+          y={26}
+          green={bool(this.state.enable) && bool(this.state.auto)}
+          textPosOffsetX={0}
+          textPosOffsetY={0}
+          varName="auto"
+          varValue={bool(this.state.auto)}
+        />
+        <Line x1="268" y1="32" x2="318" y2="32" green={bool(this.state.enable) && bool(this.state.auto)} />
         <Ramp
-          x={206}
+          x={318}
           y={20}
-          green={yes}
+          green={bool(this.state.enable) && bool(this.state.auto)}
           textPosOffsetX={0}
           textPosOffsetY={0}
           varName="g"
-          varValue={9.81}
+          varValue={this.state.g}
         />
-        <line x1="230" y1="32" x2="280" y2="32" style={style(yes)} />
+        <Line x1="342" y1="32" x2="392" y2="32" green={bool(this.state.enable) && bool(this.state.auto)} />
         <Output
-          x={280}
+          x={392}
           y={28}
-          green={yes}
+          green={bool(this.state.enable) && bool(this.state.auto)}
           textPosOffsetX={0}
           textPosOffsetY={0}
           varName="the answer"
-          varValue={42}
+          varValue={this.state.theAnswer}
         />
       </svg>
     )

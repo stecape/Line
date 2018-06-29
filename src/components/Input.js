@@ -20,6 +20,9 @@ export default class Input extends Component {
   }
 
   render() {
+
+    var ID = "Input" + Math.trunc(Math.random()*1000)
+
     var style = (green) => {
       return {
         color: green ? '#3fb855' : 'black',
@@ -40,13 +43,13 @@ export default class Input extends Component {
   	return(
   		<g>
 				<defs>
-          <g id="Input">
+          <g id={ID}>
             <rect width="24" height="8" fillOpacity="0.3" />
             <line x1="18" y1="0" x2="24" y2="4" />
             <line x1="18" y1="8" x2="24" y2="4" />
           </g>
         </defs>
-        <use x={this.props.x} y={this.props.y} href="#Input" style={style(this.state.green)} />
+        <use x={this.props.x} y={this.props.y} href={ '#' + ID } style={style(this.state.green)} />
         <rect x={this.props.x} y={this.props.y} width="24" height="8" fill="transparent" cursor="pointer" onClick={() => this.setState({toggle: !this.state.toggle})} />
         { this.state.toggle && <text x={this.props.x + this.props.textPosOffsetX} y={this.props.y-4 + this.props.textPosOffsetY} style={text}>{this.state.varValue}</text> }
         { this.state.toggle && <text x={this.props.x + this.props.textPosOffsetX} y={this.props.y-14 + this.props.textPosOffsetY} style={text}>{this.state.varName}</text> }
