@@ -1,126 +1,108 @@
 import React, { Component } from 'react'
-import axios from 'axios'
-import Ramp from './components/Ramp'
-import TestPoint from './components/TestPoint'
-import Input from './components/Input'
-import Line from './components/Line'
-import Output from './components/Output'
-import SwitchNO from './components/SwitchNO'
+import { Route, Switch } from 'react-router-dom'
+import Home from './pages/Home'
+import Regulator from './fc/Regulator'
+import AnalogInput from './fc/AnalogInput'
+import AnalogOutput from './fc/AnalogOutput'
+import DiameterCalculation from './fc/DiameterCalculation'
+import Drawer from '@material-ui/core/Drawer'
+import List from '@material-ui/core/List'
+import Paper from '@material-ui/core/Paper'
+import FcListItems from './fc/FcListItems'
+import { withStyles } from '@material-ui/core/styles'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
+import IconButton from '@material-ui/core/IconButton'
+import MenuIcon from '@material-ui/icons/Menu'
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 
 import './App.css'
 
-export default class App extends Component {
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      light: '#f9683a',
+      main: '#bf360c',
+      dark: '#870000',
+      contrastText: '#fff',
+    },
+    secondary: {
+      light: '#a7c0cd',
+      main: '#78909c',
+      dark: '#4b636e',
+      contrastText: '#f5f5f5',
+    },
+  },
+})
+
+const styles = {
+  root: {
+    flexGrow: 1,
+  },
+  flex: {
+    flex: 1,
+  },
+  menuButton: {
+    marginLeft: -12,
+    marginRight: 20,
+  },
+  paperContent: {
+    padding: 10,
+    margin: 10,
+  }
+}
+
+class App extends Component {
   constructor(props) {
     super(props)
-    this.state = { 
-      selection: "Regulator1"
+    this.state = {
+      drawer: false,
     }
   }
 
-  axiosFunc = () => {
-    axios.get('data.html').then(results => {
-      this.setState(results.data[this.state.selection])
+  toggleDrawer = (open) => () => {
+    this.setState({
+      drawer: open
     })
-  }
-
-  componentDidMount() {
-    this.axiosFunc()
-    axios.get('data.html').then(results => {
-      var options = Object.keys(results.data).map( reg => {
-        return <option key={reg} value={reg}>{reg}</option>
-      })
-      this.setState({options: options})
-    })
-    this.interval = setInterval(this.axiosFunc, 1000)
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.interval)
   }
 
   render() {
-
-    var bool = (bool) => { return bool === "1" ? true : false }
-    
-    var change = (event) => this.setState({selection: event.target.value})
-
     return (
-      <div>
-        <select onChange={change} value={this.state.selection}>
-          {this.state.options}
-  			</select>
-        <svg width="1920" height="1080" viewBox="0 0 960 540" >
-          <Input
-            x={0}
-            y={28}
-            green={true}
-            textPosOffsetX={0}
-            textPosOffsetY={0}
-            varName="c"
-            varValue={this.state.c}
-          />
-          <Line x1="24" y1="32" x2="70" y2="32" green={true} />
-          <SwitchNO
-            x={70}
-            y={26}
-            green={bool(this.state.enable)}
-            textPosOffsetX={0}
-            textPosOffsetY={0}
-            varName="enable"
-            varValue={bool(this.state.enable)}
-          />
-          <Line x1="82" y1="32" x2="120" y2="32" green={bool(this.state.enable)} />
-          <Ramp
-            x={120}
-            y={20}
-            green={bool(this.state.enable)}
-            textPosOffsetX={0}
-            textPosOffsetY={0}
-            varName="pi"
-            varValue={this.state.pi}
-          />
-          <Line x1="144" y1="32" x2="194" y2="32" green={bool(this.state.enable)} />
-          <TestPoint
-            x={194}
-            y={26}
-            green={bool(this.state.enable)}
-            textPosOffsetX={0}
-            textPosOffsetY={0}
-            varName="h"
-            varValue={this.state.h}
-          />
-          <Line x1="206" y1="32" x2="256" y2="32" green={bool(this.state.enable)} />
-          <SwitchNO
-            x={256}
-            y={26}
-            green={bool(this.state.enable) && bool(this.state.auto)}
-            textPosOffsetX={0}
-            textPosOffsetY={0}
-            varName="auto"
-            varValue={bool(this.state.auto)}
-          />
-          <Line x1="268" y1="32" x2="318" y2="32" green={bool(this.state.enable) && bool(this.state.auto)} />
-          <Ramp
-            x={318}
-            y={20}
-            green={bool(this.state.enable) && bool(this.state.auto)}
-            textPosOffsetX={0}
-            textPosOffsetY={0}
-            varName="g"
-            varValue={this.state.g}
-          />
-          <Line x1="342" y1="32" x2="392" y2="32" green={bool(this.state.enable) && bool(this.state.auto)} />
-          <Output
-            x={392}
-            y={28}
-            green={bool(this.state.enable) && bool(this.state.auto)}
-            textPosOffsetX={0}
-            textPosOffsetY={0}
-            varName="the answer"
-            varValue={this.state.theAnswer}
-          />
-        </svg>
-      </div>
+      <MuiThemeProvider theme={theme}>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton className={this.props.classes.menuButton} color="inherit" onClick={this.toggleDrawer(true)} >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="title" color="inherit" className={this.props.classes.flex}>
+              Machine Web Tools
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <Paper>
+          <Drawer open={this.state.drawer} onClose={this.toggleDrawer(false)}>
+            <div
+              tabIndex={0}
+              onClick={this.toggleDrawer(false)}
+              onKeyDown={this.toggleDrawer(false)}
+            >
+              <List><FcListItems/></List>
+            </div>
+          </Drawer>
+          <div className={this.props.classes.paperContent}>
+            <Switch  >
+              <Route exact path="/" component={Home}/>
+              <Route path="/Regulator" component={Regulator}/>
+              <Route path="/AnalogInput" component={AnalogInput}/>
+              <Route path="/AnalogOutput" component={AnalogOutput}/>
+              <Route path="/DiameterCalculation" component={DiameterCalculation}/>
+            </Switch>
+          </div>
+        </Paper>
+      </MuiThemeProvider>
     )
   }
 }
+
+export default withStyles(styles)(App)

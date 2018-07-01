@@ -25,10 +25,10 @@ export default class TestPoint extends Component {
 
     var style = (green) => {
       return {
-        color: green ? '#3fb855' : 'black',
-        fillColor: green ? '#3fb855' : 'black',
-        fill: green ? '#3fb855' : 'black',
-        stroke: green ? '#3fb855' : 'black'
+        color: green ? '#bf360c' : '#78909c',
+        fillColor: green ? '#bf360c' : '#78909c',
+        fill: green ? '#bf360c' : '#78909c',
+        stroke: green ? '#bf360c' : '#78909c'
       }
     }
     
