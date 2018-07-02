@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 import Home from './pages/Home'
 import Regulator from './fc/Regulator'
 import AnalogInput from './fc/AnalogInput'
@@ -91,7 +91,8 @@ class App extends Component {
             </div>
           </Drawer>
           <div className={this.props.classes.paperContent}>
-            <Switch  >
+            <Switch >
+              <Redirect from='/index.html' to='/'/>
               <Route exact path="/" component={Home}/>
               <Route path="/Regulator" component={Regulator}/>
               <Route path="/AnalogInput" component={AnalogInput}/>
