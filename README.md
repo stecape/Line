@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Relative to branch Material:<br />
 <br />
 Modify index.js adding basename for make it works on PLC, remove basename for make it works in local<br />
@@ -10,6 +11,8 @@ for local execution.<br />
 If you want to try PLC version you can take the Build folder, it should be already ok.<br />
 WEB.zap14 contains the PLC Software.<br />
 <br />
+=======
+>>>>>>> 110be0b6fc81959d01d027d287d004ba9c95cc79
 Load WEB.zap14 in a CPU<br />
 Modify data in build/data for customize the functions<br />
 Recreate the web blocs and reload the CPU<br />
