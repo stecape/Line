@@ -7,7 +7,7 @@ import { BrowserRouter } from 'react-router-dom'
 //	<BrowserRouter basename="/awp/React" >
 
 ReactDOM.render(
-	<BrowserRouter basename="/awp/React">
+	<BrowserRouter>
 		<App />
 	</BrowserRouter>,
 	document.getElementById('root')
