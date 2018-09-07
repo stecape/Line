@@ -52,6 +52,12 @@ class FcListItems extends Component {
           </ListItemIcon>
           <ListItemText primary="Diameter Calculation" />
         </MenuItem>
+        <MenuItem button component={Link} to="/PID" selected={isSelected("/PID")}>
+          <ListItemIcon>
+            <FiberManualRecordIcon />
+          </ListItemIcon>
+          <ListItemText primary="PID" />
+        </MenuItem>
       </div>
     )
   }

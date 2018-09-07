@@ -5,6 +5,7 @@ import Regulator from './fc/Regulator'
 import AnalogInput from './fc/AnalogInput'
 import AnalogOutput from './fc/AnalogOutput'
 import DiameterCalculation from './fc/DiameterCalculation'
+import PID from './fc/PID'
 import Drawer from '@material-ui/core/Drawer'
 import List from '@material-ui/core/List'
 import Paper from '@material-ui/core/Paper'
@@ -98,6 +99,7 @@ class App extends Component {
               <Route path="/AnalogInput" component={AnalogInput}/>
               <Route path="/AnalogOutput" component={AnalogOutput}/>
               <Route path="/DiameterCalculation" component={DiameterCalculation}/>
+              <Route path="/PID" component={PID}/>
             </Switch>
           </div>
         </Paper>
