@@ -21,7 +21,7 @@ export default class Line extends Component {
 
   render() {
   	
-  	var ID = "Line" + Math.trunc(Math.random()*1000)
+  	var ID = "Line" + Math.trunc(Math.random()*1000) + "ST" + Math.trunc(Math.random()*1000) + "CP" + Math.trunc(Math.random()*1000)
 
     var style = (green) => {
       return {

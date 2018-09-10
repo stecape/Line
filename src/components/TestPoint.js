@@ -21,7 +21,7 @@ export default class TestPoint extends Component {
 
   render() {
 
-    var ID = "TestPoint" + Math.trunc(Math.random()*1000)
+    var ID = "TestPoint" + Math.trunc(Math.random()*1000) + Math.trunc(Math.random()*1000)
 
     var style = (green) => {
       return {

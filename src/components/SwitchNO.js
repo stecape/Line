@@ -21,7 +21,7 @@ export default class SwitchNO extends Component {
 
   render() {
 
-    var ID = "SwitchNO" + Math.trunc(Math.random()*1000)
+    var ID = "SwitchNO" + Math.trunc(Math.random()*1000) + Math.trunc(Math.random()*1000)
 
     var style = (green) => {
       return {
@@ -43,7 +43,7 @@ export default class SwitchNO extends Component {
   	return(
   		<g>
 				<defs>
-          <g id={ID}>
+          <g id={ID} transform={"rotate(" + this.props.rotate +" 6 6)"} >
             <rect width="12" height="12" fill="none" />
             <line x1="0" y1="6" x2="3" y2="6" />
             <line x1="3" y1={this.state.varValue ? "6" : "3"} x2="9" y2="6" />

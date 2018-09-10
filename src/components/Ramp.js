@@ -21,7 +21,7 @@ export default class Ramp extends Component {
 
   render() {
 
-    var ID = "Ramp" + Math.trunc(Math.random()*1000)
+    var ID = "Ramp" + Math.trunc(Math.random()*1000) + Math.trunc(Math.random()*1000)
 
     var style = (green) => {
       return {

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import '../App.css'
 
 
-export default class Difference extends Component {
+export default class Sum extends Component {
   constructor(props){
     super(props)
 
@@ -19,7 +19,7 @@ export default class Difference extends Component {
 
   render() {
 
-    var ID = "Difference" + Math.trunc(Math.random()*1000) + Math.trunc(Math.random()*1000)
+    var ID = "Sum" + Math.trunc(Math.random()*1000) + Math.trunc(Math.random()*1000)
 
     var style = (green) => {
       return {
@@ -34,7 +34,6 @@ export default class Difference extends Component {
 				<defs>
           <g id={ID}>
             <circle  cx="6" cy="6" r="6" fillOpacity="0" />
-            <line x1={14 + this.props.signPosOffsetX } y1={14 + this.props.signPosOffsetY } x2={18 + this.props.signPosOffsetX } y2={14 + this.props.signPosOffsetY } />
           </g>
         </defs>
         <use x={this.props.x} y={this.props.y} href={ '#' + ID } style={style(this.state.green)} />
