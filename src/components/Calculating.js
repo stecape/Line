@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import '../App.css'
 
 
-export default class InternalReference extends Component {
+export default class Calculating extends Component {
   constructor(props){
     super(props)
 
@@ -22,7 +22,7 @@ export default class InternalReference extends Component {
 
   render() {
 
-    var ID = "InternalReference" + Math.trunc(Math.random()*1000) + Math.trunc(Math.random()*1000)
+    var ID = "Calculating" + Math.trunc(Math.random()*1000) + Math.trunc(Math.random()*1000)
 
     var decodeEntities = (function() {
       // this prevents any overhead from creating the object each time
@@ -56,21 +56,22 @@ export default class InternalReference extends Component {
     var text = {
       fontFamily: "Verdana",
       fontSize: 6,
-      strokeWidth: 0.1,
-      fill: 'gray',
-      stroke: 'gray'
+      strokeWidth: 0.1
     }
 
-    
+
   	return(
   		<g>
 				<defs>
           <g id={ID}>
-            <rect width="24" height="8" fillOpacity="0.3" />
+            <rect width="72" height="36" fill="none" />
+            <line x1="4" y1="18" x2="68" y2="18" />
+            <text x="6" y="12" style={text}>w * Kp * TimeBase</text>
+            <text x="32" y="27" style={text}>Tw</text>
           </g>
         </defs>
         <use x={this.props.x} y={this.props.y} href={ '#' + ID } style={style(this.state.green)} />
-        <rect x={this.props.x} y={this.props.y} width="24" height="8" fill="transparent" cursor="pointer" onClick={() => this.setState({toggle: !this.state.toggle})} />
+        <rect x={this.props.x} y={this.props.y} width="72" height="36" fill="transparent" cursor="pointer" onClick={() => this.setState({toggle: !this.state.toggle})} />
         { this.state.toggle && <text x={this.props.x + this.props.textPosOffsetX} y={this.props.y-4 + this.props.textPosOffsetY} style={text}>{decodeEntities(this.state.varValue)}</text> }
         { this.state.toggle && <text x={this.props.x + this.props.textPosOffsetX} y={this.props.y-14 + this.props.textPosOffsetY} style={text}>{this.state.varName}</text> }
   		</g>
@@ -78,7 +79,7 @@ export default class InternalReference extends Component {
   }
 }
 
-InternalReference.defaultProps = {
+Calculating.defaultProps = {
   x: 0,
   y: 0,
   green: false,
@@ -88,15 +89,12 @@ InternalReference.defaultProps = {
   varName: ""
 }
 
-InternalReference.propTypes = {
+Calculating.propTypes = {
   x: PropTypes.number,
   y: PropTypes.number,
   green: PropTypes.bool,
   textPosOffsetX: PropTypes.number,
   textPosOffsetY: PropTypes.number,
-  varValue: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.bool
-  ]),
+  varValue: PropTypes.string,
   varName: PropTypes.string
 }

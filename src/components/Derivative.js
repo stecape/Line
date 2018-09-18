@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import '../App.css'
 
 
@@ -13,9 +14,7 @@ export default class Derivative extends Component {
 
   static getDerivedStateFromProps(nextProps, prevState){
     return {
-      green: nextProps.green,
-      varName: nextProps.varName,
-      varValue: nextProps.varValue,
+      green: nextProps.green
     }
   }
 
@@ -50,4 +49,16 @@ export default class Derivative extends Component {
       </g>
     )
   }
+}
+
+Derivative.defaultProps = {
+  x: 0,
+  y: 0,
+  green: false
+}
+
+Derivative.propTypes = {
+  x: PropTypes.number,
+  y: PropTypes.number,
+  green: PropTypes.bool
 }

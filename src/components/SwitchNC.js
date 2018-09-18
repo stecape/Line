@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import '../App.css'
 
 
@@ -58,4 +59,26 @@ export default class SwitchNC extends Component {
   		</g>
   	)
   }
+}
+
+SwitchNC.defaultProps = {
+  x: 0,
+  y: 0,
+  green: false,
+  textPosOffsetX: 0,
+  textPosOffsetY: 0,
+  rotate: 0,
+  varValue: "",
+  varName: ""
+}
+
+SwitchNC.propTypes = {
+  x: PropTypes.number,
+  y: PropTypes.number,
+  green: PropTypes.bool,
+  textPosOffsetX: PropTypes.number,
+  textPosOffsetY: PropTypes.number,
+  rotate: PropTypes.number,
+  varValue: PropTypes.bool,
+  varName: PropTypes.string
 }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import '../App.css'
 
 
@@ -50,4 +51,16 @@ export default class Inversion extends Component {
 	    </g>
   	)
   }
+}
+
+Inversion.defaultProps = {
+  x: 0,
+  y: 0,
+  green: false
+}
+
+Inversion.propTypes = {
+  x: PropTypes.number,
+  y: PropTypes.number,
+  green: PropTypes.bool
 }

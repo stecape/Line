@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import '../App.css'
 
 
@@ -50,4 +51,16 @@ export default class Multiply extends Component {
 	    </g>
   	)
   }
+}
+
+Multiply.defaultProps = {
+  x: 0,
+  y: 0,
+  green: false
+}
+
+Multiply.propTypes = {
+  x: PropTypes.number,
+  y: PropTypes.number,
+  green: PropTypes.bool
 }

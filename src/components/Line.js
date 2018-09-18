@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import '../App.css'
 
 
@@ -62,4 +63,26 @@ export default class Line extends Component {
         </g>
   	)
   }
+}
+
+Line.defaultProps = {
+  x1: 0,
+  x2: 0,
+  y1: 0,
+  y2: 0,
+  startPoint: false,
+  endPoint: false,
+  arrow: false,
+  green: false
+}
+
+Line.propTypes = {
+  x1: PropTypes.number,
+  x2: PropTypes.number,
+  y1: PropTypes.number,
+  y2: PropTypes.number,
+  startPoint: PropTypes.bool,
+  endPoint: PropTypes.bool,
+  arrow: PropTypes.bool,
+  green: PropTypes.bool
 }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import '../App.css'
 
 
@@ -50,4 +51,16 @@ export default class Integrative extends Component {
       </g>
     )
   }
+}
+
+Integrative.defaultProps = {
+  x: 0,
+  y: 0,
+  green: false
+}
+
+Integrative.propTypes = {
+  x: PropTypes.number,
+  y: PropTypes.number,
+  green: PropTypes.bool
 }

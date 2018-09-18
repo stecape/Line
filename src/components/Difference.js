@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import '../App.css'
 
 
@@ -13,7 +14,7 @@ export default class Difference extends Component {
 
   static getDerivedStateFromProps(nextProps, prevState){
     return {
-      green: nextProps.green,
+      green: nextProps.green
     }
   }
 
@@ -32,8 +33,9 @@ export default class Difference extends Component {
   	return(
   		<g>
 				<defs>
-          <g id={ID}>
+          <g id={ID}  >
             <circle  cx="6" cy="6" r="6" fillOpacity="0" />
+            <polygon points="12,6 7,8 7,4" transform={"rotate(" + this.props.rotate +" 6 6)"} />
             <line x1={14 + this.props.signPosOffsetX } y1={14 + this.props.signPosOffsetY } x2={18 + this.props.signPosOffsetX } y2={14 + this.props.signPosOffsetY } />
           </g>
         </defs>
@@ -41,4 +43,22 @@ export default class Difference extends Component {
   		</g>
   	)
   }
+}
+
+Difference.defaultProps = {
+  x: 0,
+  y: 0,
+  green: false,
+  rotate: 0,
+  signPosOffsetX: 0,
+  signPosOffsetY: 0
+}
+
+Difference.propTypes = {
+  x: PropTypes.number,
+  y: PropTypes.number,
+  green: PropTypes.bool,
+  rotate: PropTypes.number,
+  signPosOffsetX: PropTypes.number,
+  signPosOffsetY: PropTypes.number
 }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import '../App.css'
 
 
@@ -31,13 +32,7 @@ export default class Limitator extends Component {
         stroke: green ? '#bf360c' : '#78909c'
       }
     }
-    
-    var text = {
-      fontFamily: "Verdana",
-      fontSize: 6,
-      strokeWidth: 0.1
-    }
-    
+  
   	return(
   		<g>
 			 <defs>
@@ -57,4 +52,18 @@ export default class Limitator extends Component {
 	    </g>
   	)
   }
+}
+
+Limitator.defaultProps = {
+  x: 0,
+  y: 0,
+  green: false,
+  rotate: 0
+}
+
+Limitator.propTypes = {
+  x: PropTypes.number,
+  y: PropTypes.number,
+  green: PropTypes.bool,
+  rotate: PropTypes.number
 }

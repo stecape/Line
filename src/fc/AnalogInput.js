@@ -63,7 +63,7 @@ export default class AnalogInput extends Component {
             varName="c"
             varValue={this.state.c}
           />
-          <Line x1="24" y1="32" x2="70" y2="32" green={true} />
+          <Line x1={24} y1={32} x2={70} y2={32} green={true} />
           <SwitchNO
             x={70}
             y={26}
@@ -73,7 +73,7 @@ export default class AnalogInput extends Component {
             varName="enable"
             varValue={bool(this.state.enable)}
           />
-          <Line x1="82" y1="32" x2="120" y2="32" green={bool(this.state.enable)} />
+          <Line x1={82} y1={32} x2={120} y2={32} green={bool(this.state.enable)} />
           <Ramp
             x={120}
             y={20}
@@ -83,7 +83,7 @@ export default class AnalogInput extends Component {
             varName="pi"
             varValue={this.state.pi}
           />
-          <Line x1="144" y1="32" x2="194" y2="32" green={bool(this.state.enable)} />
+          <Line x1={144} y1={32} x2={194} y2={32} green={bool(this.state.enable)} />
           <TestPoint
             x={194}
             y={26}
@@ -93,7 +93,7 @@ export default class AnalogInput extends Component {
             varName="h"
             varValue={this.state.h}
           />
-          <Line x1="206" y1="32" x2="256" y2="32" green={bool(this.state.enable)} />
+          <Line x1={206} y1={32} x2={256} y2={32} green={bool(this.state.enable)} />
           <SwitchNO
             x={256}
             y={26}
@@ -103,7 +103,7 @@ export default class AnalogInput extends Component {
             varName="auto"
             varValue={bool(this.state.auto)}
           />
-          <Line x1="268" y1="32" x2="318" y2="32" green={bool(this.state.enable) && bool(this.state.auto)} />
+          <Line x1={268} y1={32} x2={318} y2={32} green={bool(this.state.enable) && bool(this.state.auto)} />
           <Ramp
             x={318}
             y={20}
@@ -113,7 +113,7 @@ export default class AnalogInput extends Component {
             varName="g"
             varValue={this.state.g}
           />
-          <Line x1="342" y1="32" x2="392" y2="32" green={bool(this.state.enable) && bool(this.state.auto)} />
+          <Line x1={342} y1={32} x2={392} y2={32} green={bool(this.state.enable) && bool(this.state.auto)} />
           <Output
             x={392}
             y={28}
