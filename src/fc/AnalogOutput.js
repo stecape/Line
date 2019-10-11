@@ -19,14 +19,14 @@ export default class AnalogOutput extends Component {
   }
 
   axiosFunc = () => {
-    axios.get('data/Analog Output.html').then(results => {
+    axios.get('data/ProbeData.html').then(results => {
       this.setState(results.data[this.state.selection])
     })
   }
 
   componentDidMount() {
     this.axiosFunc()
-    axios.get('data/Analog Output.html').then(results => {
+    axios.get('data/ProbeData.html').then(results => {
       var options = Object.keys(results.data).map( reg => {
         return <MenuItem key={reg} value={reg}>{reg}</MenuItem>
       })

@@ -4,10 +4,10 @@ import App from './App'
 import registerServiceWorker from './registerServiceWorker'
 import { BrowserRouter } from 'react-router-dom'
 
-//	<BrowserRouter basename="/awp/React" >
+//	<BrowserRouter>
 
 ReactDOM.render(
-	<BrowserRouter>
+	<BrowserRouter basename="/awp/React" >
 		<App />
 	</BrowserRouter>,
 	document.getElementById('root')
