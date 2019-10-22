@@ -6,6 +6,8 @@ import AnalogInput from './fc/AnalogInput'
 import AnalogOutput from './fc/AnalogOutput'
 import DiameterCalculation from './fc/DiameterCalculation'
 import PID from './fc/PID'
+import GenericController from './fc/GenericController'
+import WinderTensionController from './fc/WinderTensionController'
 import Drawer from '@material-ui/core/Drawer'
 import List from '@material-ui/core/List'
 import Paper from '@material-ui/core/Paper'
@@ -100,6 +102,8 @@ class App extends Component {
               <Route path="/AnalogOutput" component={AnalogOutput}/>
               <Route path="/DiameterCalculation" component={DiameterCalculation}/>
               <Route path="/PID" component={PID}/>
+              <Route path="/GenericController" component={GenericController}/>
+              <Route path="/WinderTensionController" component={WinderTensionController}/>
             </Switch>
           </div>
         </Paper>

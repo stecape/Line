@@ -24,7 +24,7 @@ export default class IndexInput extends Component {
 
   handleSubmit(event) {
     var value = this.state.nextValue
-    var data = '"HMI".Index.Set.reHMI' + '=' + value.toString()
+    var data = '"HMI".Index.Set.reHMI =' + value.toString()
     axios.post('writeIndex.html', data).then(results => {
       console.log(results.data)
     })
@@ -32,7 +32,7 @@ export default class IndexInput extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState){
-    if(nextProps.index != prevState.index){
+    if(nextProps.index !== prevState.index){
       return {
         index: nextProps.index,
         nextValue: nextProps.index
