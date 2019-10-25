@@ -10,7 +10,7 @@ import SwitchNC from '../components/SwitchNC'
 import Switch from '../components/Switch'
 import Inversion from '../components/Inversion'
 import Limitator from '../components/Limitator'
-import Calculating from '../components/Calculating'
+import PIDCalculating from '../components/PIDCalculating'
 import Sum from '../components/Sum'
 import Difference from '../components/Difference'
 import Multiply from '../components/Multiply'
@@ -356,7 +356,7 @@ export default class PID extends Component {
                   <Line x1={792} y1={232} x2={746} y2={232} green={bool(this.state.Bool_5)} />
                   <Line x1={572} y1={238} x2={572} y2={282} green={bool(this.state.Bool_5)} />
                   <Line x1={572} y1={282} x2={532} y2={282} green={bool(this.state.Bool_5)} />
-                  <Calculating 
+                  <PIDCalculating 
                     x={460}
                     y={264}
                     green={bool(this.state.Bool_5)}
