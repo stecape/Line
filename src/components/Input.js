@@ -13,10 +13,15 @@ export default class Input extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState){
+    // if (nextProps.varName== "boTensionSetRampEnableIN" || nextProps.varName== "bo_ResetIntegrator_IN") {
+    //   console.log(nextProps.varName, ": ", nextProps.varValue)
+    // }
     return {
       green: nextProps.green,
       varName: nextProps.varName,
       varValue: nextProps.varValue,
+      textPosOffsetX: nextProps.textPosOffsetX,
+      textPosOffsetY: nextProps.textPosOffsetY,
     }
   }
 

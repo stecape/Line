@@ -1,16 +1,29 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 import PropTypes from 'prop-types'
 import Limitator from './Limitator'
 import Line from './Line'
 import '../App.css'
 
+import {withRouter} from "react-router-dom";
 
-export default class PIDPlaceHolder extends Component {
+class PIDPlaceHolder extends Component {
   constructor(props){
     super(props)
 
     this.state = {
     }
+    this.handleClick = this.handleClick.bind(this)
+
+  }
+
+  handleClick(event) {
+    var value = this.state.referenceID
+    var data = '"HMI".Index.Set.reHMI =' + value.toString()
+    axios.post('writeIndex.html', data).then(results => {
+      console.log(results.data)
+      this.props.history.push('/PID')
+    })
   }
 
   static getDerivedStateFromProps(nextProps, prevState){
@@ -24,14 +37,16 @@ export default class PIDPlaceHolder extends Component {
       boPIDEnableIN: nextProps.boPIDEnableIN,
       boIntegralEnableIN: nextProps.boIntegralEnableIN,
       boResetIntegratorIN: nextProps.boResetIntegratorIN,
-      boAntiWindUpEnableIN: nextProps.boAntiWindUpEnableIN,
+      boPIDAntiWindUpEnableIN: nextProps.boPIDAntiWindUpEnableIN,
       boDerivativeEnableIN: nextProps.boDerivativeEnableIN,
+      boPIDHoldIN: nextProps.boPIDHoldIN,
       boPIDManualControlBumplessIN: nextProps.boPIDManualControlBumplessIN,
       rePIDManualControlBumplessTiIN: nextProps.rePIDManualControlBumplessTiIN,
       rePIDOutMaxIN: nextProps.rePIDOutMaxIN,
       rePIDOutMinIN: nextProps.rePIDOutMinIN,
       rePIDOutMaxScalingIN: nextProps.rePIDOutMaxScalingIN,
-      rePIDOutMinScalingIN: nextProps.rePIDOutMinScalingIN
+      rePIDOutMinScalingIN: nextProps.rePIDOutMinScalingIN,
+      referenceID: nextProps.referenceID
     }
   }
 
@@ -94,38 +109,41 @@ export default class PIDPlaceHolder extends Component {
             <text x="2" y="68" style={label}>reTiIN: {this.state.reTiIN}</text>
             <text x="2" y="80" style={label}>reTdIN: {this.state.reTdIN}</text>
             <text x="2" y="92" style={label}>reTimeBaseIN: {this.state.reTimeBaseIN}</text>
-            <text x="2" y="104" style={label}>boPIDEnableIN: {this.state.boPIDEnableIN}</text>
-            <text x="2" y="116" style={label}>boIntegralEnableIN: {this.state.boIntegralEnableIN}</text>
-            <text x="2" y="128" style={label}>boResetIntegratorIN: {this.state.boResetIntegratorIN}</text>
-            <text x="2" y="140" style={label}>boAntiWindUpEnableIN: {this.state.boAntiWindUpEnableIN}</text>
-            <text x="2" y="152" style={label}>boDerivativeEnableIN: {this.state.boDerivativeEnableIN}</text>
-            <text x="2" y="164" style={label}>boPIDManualControlBumplessIN: {this.state.boPIDManualControlBumplessIN}</text>
-            <text x="2" y="176" style={label}>rePIDManualControlBumplessTiIN: {this.state.rePIDManualControlBumplessTiIN}</text>
-
+            <text x="2" y="104" style={label}>rePIDManualControlBumplessTiIN: {this.state.rePIDManualControlBumplessTiIN}</text>
+            <text x="2" y="116" style={label}>boPIDEnableIN: {this.state.boPIDEnableIN ? "true" : "false"}</text>
+            <text x="2" y="128" style={label}>boIntegralEnableIN: {this.state.boIntegralEnableIN ? "true" : "false"}</text>
+            <text x="2" y="140" style={label}>boResetIntegratorIN: {this.state.boResetIntegratorIN ? "true" : "false"}</text>
+            <text x="2" y="152" style={label}>boPIDAntiWindUpEnableIN: {this.state.boPIDAntiWindUpEnableIN ? "true" : "false"}</text>
+            <text x="2" y="164" style={label}>boDerivativeEnableIN: {this.state.boDerivativeEnableIN ? "true" : "false"}</text>
+            <text x="2" y="176" style={label}>boPIDHoldIN: {this.state.boPIDHoldIN ? "true" : "false"}</text>
+            <text x="2" y="188" style={label}>boPIDManualControlBumplessIN: {this.state.boPIDManualControlBumplessIN ? "true" : "false"}</text>
 
             <text x="160" y="12" style={label}>rePIDOutMaxIN: {this.state.rePIDOutMaxIN  * this.state.rePIDOutMaxScalingIN / 100}</text>
-            <Line x1={206} y1={50} x2={206} y2={16} green={true} />
-            <Line x1={206} y1={0} x2={206} y2={4} green={true} />
+            <Line x1={206} y1={50} x2={206} y2={16} green={this.state.green} />
+            <Line x1={206} y1={0} x2={206} y2={4} green={this.state.green} />
 
             <text x="160" y="190" style={label}>rePIDOutMinIN: {this.state.rePIDOutMinIN  * this.state.rePIDOutMinScalingIN / 100}</text>
-            <Line x1={206} y1={62} x2={206} y2={182} green={true} />
-            <Line x1={206} y1={192} x2={206} y2={200} green={true} />
+            <Line x1={206} y1={62} x2={206} y2={182} green={this.state.green} />
+            <Line x1={206} y1={192} x2={206} y2={200} green={this.state.green} />
             
-            <Line x1={212} y1={56} x2={260} y2={56} green={true} />
+            <Line x1={212} y1={56} x2={260} y2={56} green={this.state.green} />
 
             <Limitator 
               x={200}
               y={50}
-              green={true}
+              green={this.state.green}
             />
           </g>
         </defs>
         <use x={this.props.x} y={this.props.y} href={ '#' + ID } style={style(this.state.green)} />
-        <rect x={this.props.x} y={this.props.y} width="260" height="200" fill="transparent" cursor="pointer" onClick={() => this.setState({toggle: true})} />
+        <rect x={this.props.x} y={this.props.y} width="260" height="200" fill="transparent" cursor="pointer" onClick={this.handleClick} />
       </g>
     )
   }
 }
+
+export default withRouter(PIDPlaceHolder)
+
 
 PIDPlaceHolder.defaultProps = {
   x: 0,
