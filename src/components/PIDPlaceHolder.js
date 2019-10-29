@@ -27,27 +27,30 @@ class PIDPlaceHolder extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState){
-    return {
-      green: nextProps.green,
-      reGpIN: nextProps.reGpIN,
-      rekPIN: nextProps.rekPIN,
-      reTiIN: nextProps.reTiIN,
-      reTdIN: nextProps.reTdIN,
-      reTimeBaseIN: nextProps.reTimeBaseIN,
-      boPIDEnableIN: nextProps.boPIDEnableIN,
-      boIntegralEnableIN: nextProps.boIntegralEnableIN,
-      boResetIntegratorIN: nextProps.boResetIntegratorIN,
-      boPIDAntiWindUpEnableIN: nextProps.boPIDAntiWindUpEnableIN,
-      boDerivativeEnableIN: nextProps.boDerivativeEnableIN,
-      boPIDHoldIN: nextProps.boPIDHoldIN,
-      boPIDManualControlBumplessIN: nextProps.boPIDManualControlBumplessIN,
-      rePIDManualControlBumplessTiIN: nextProps.rePIDManualControlBumplessTiIN,
-      rePIDOutMaxIN: nextProps.rePIDOutMaxIN,
-      rePIDOutMinIN: nextProps.rePIDOutMinIN,
-      rePIDOutMaxScalingIN: nextProps.rePIDOutMaxScalingIN,
-      rePIDOutMinScalingIN: nextProps.rePIDOutMinScalingIN,
-      referenceID: nextProps.referenceID
+    if(nextProps.reGpIN !== undefined) {
+      return {
+        green: nextProps.green,
+        reGpIN: nextProps.reGpIN,
+        rekPIN: nextProps.rekPIN,
+        reTiIN: nextProps.reTiIN,
+        reTdIN: nextProps.reTdIN,
+        reTimeBaseIN: nextProps.reTimeBaseIN,
+        boPIDEnableIN: nextProps.boPIDEnableIN,
+        boIntegralEnableIN: nextProps.boIntegralEnableIN,
+        boResetIntegratorIN: nextProps.boResetIntegratorIN,
+        boPIDAntiWindUpEnableIN: nextProps.boPIDAntiWindUpEnableIN,
+        boDerivativeEnableIN: nextProps.boDerivativeEnableIN,
+        boPIDHoldIN: nextProps.boPIDHoldIN,
+        boPIDManualControlBumplessIN: nextProps.boPIDManualControlBumplessIN,
+        rePIDManualControlBumplessTiIN: nextProps.rePIDManualControlBumplessTiIN,
+        rePIDOutMaxIN: nextProps.rePIDOutMaxIN,
+        rePIDOutMinIN: nextProps.rePIDOutMinIN,
+        rePIDOutMaxScalingIN: nextProps.rePIDOutMaxScalingIN,
+        rePIDOutMinScalingIN: nextProps.rePIDOutMinScalingIN,
+        referenceID: nextProps.referenceID
+      }
     }
+    return
   }
 
   render() {
@@ -104,12 +107,12 @@ class PIDPlaceHolder extends Component {
             <text x="46" y="16" style={text}>PID</text>
             <text x="2" y="12" style={label}>SET</text>
             <text x="2" y="28" style={label}>ACT</text>
-            <text x="2" y="44" style={label}>reGpIN: {this.state.reGpIN}</text>
-            <text x="2" y="56" style={label}>rekPIN: {this.state.rekPIN}</text>
-            <text x="2" y="68" style={label}>reTiIN: {this.state.reTiIN}</text>
-            <text x="2" y="80" style={label}>reTdIN: {this.state.reTdIN}</text>
-            <text x="2" y="92" style={label}>reTimeBaseIN: {this.state.reTimeBaseIN}</text>
-            <text x="2" y="104" style={label}>rePIDManualControlBumplessTiIN: {this.state.rePIDManualControlBumplessTiIN}</text>
+            <text x="2" y="44" style={label}>reGpIN: {decodeEntities(this.state.reGpIN)}</text>
+            <text x="2" y="56" style={label}>rekPIN: {decodeEntities(this.state.rekPIN)}</text>
+            <text x="2" y="68" style={label}>reTiIN: {decodeEntities(this.state.reTiIN)}</text>
+            <text x="2" y="80" style={label}>reTdIN: {decodeEntities(this.state.reTdIN)}</text>
+            <text x="2" y="92" style={label}>reTimeBaseIN: {decodeEntities(this.state.reTimeBaseIN)}</text>
+            <text x="2" y="104" style={label}>rePIDManualControlBumplessTiIN: {decodeEntities(this.state.rePIDManualControlBumplessTiIN)}</text>
             <text x="2" y="116" style={label}>boPIDEnableIN: {this.state.boPIDEnableIN ? "true" : "false"}</text>
             <text x="2" y="128" style={label}>boIntegralEnableIN: {this.state.boIntegralEnableIN ? "true" : "false"}</text>
             <text x="2" y="140" style={label}>boResetIntegratorIN: {this.state.boResetIntegratorIN ? "true" : "false"}</text>
@@ -118,11 +121,11 @@ class PIDPlaceHolder extends Component {
             <text x="2" y="176" style={label}>boPIDHoldIN: {this.state.boPIDHoldIN ? "true" : "false"}</text>
             <text x="2" y="188" style={label}>boPIDManualControlBumplessIN: {this.state.boPIDManualControlBumplessIN ? "true" : "false"}</text>
 
-            <text x="160" y="12" style={label}>rePIDOutMaxIN: {this.state.rePIDOutMaxIN  * this.state.rePIDOutMaxScalingIN / 100}</text>
+            <text x="160" y="12" style={label}>rePIDOutMaxIN: {(Number(decodeEntities(this.state.rePIDOutMaxIN))  * Number(decodeEntities(this.state.rePIDOutMaxScalingIN)) / 100).toFixed(5)}</text>
             <Line x1={206} y1={50} x2={206} y2={16} green={this.state.green} />
             <Line x1={206} y1={0} x2={206} y2={4} green={this.state.green} />
 
-            <text x="160" y="190" style={label}>rePIDOutMinIN: {this.state.rePIDOutMinIN  * this.state.rePIDOutMinScalingIN / 100}</text>
+            <text x="160" y="190" style={label}>rePIDOutMinIN: {(Number(decodeEntities(this.state.rePIDOutMinIN))  * Number(decodeEntities(this.state.rePIDOutMinScalingIN)) / 100).toFixed(5)}</text>
             <Line x1={206} y1={62} x2={206} y2={182} green={this.state.green} />
             <Line x1={206} y1={192} x2={206} y2={200} green={this.state.green} />
             
