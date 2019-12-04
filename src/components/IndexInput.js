@@ -24,7 +24,7 @@ export default class IndexInput extends Component {
 
   handleSubmit(event) {
     var value = this.state.nextValue
-    var data = '"HMI".Index.Set.reHMI =' + value.toString()
+    var data = '"ProbeData".ProbeIndex =' + value.toString()
     axios.post('writeIndex.html', data).then(results => {
       console.log(results.data)
     })
@@ -48,7 +48,7 @@ export default class IndexInput extends Component {
         <TextField
           id="standard-number"
           inputProps={{
-            name:'"HMI".Index.Set.reHMI'
+            name:'"ProbeData".ProbeIndex'
           }}
           label="Index"
           value={this.state.nextValue}

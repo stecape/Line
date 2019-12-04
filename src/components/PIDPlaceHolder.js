@@ -19,7 +19,7 @@ class PIDPlaceHolder extends Component {
 
   handleClick(event) {
     var value = this.state.referenceID
-    var data = '"HMI".Index.Set.reHMI =' + value.toString()
+    var data = '"ProbeData".ProbeIndex =' + value.toString()
     axios.post('writeIndex.html', data).then(results => {
       console.log(results.data)
       this.props.history.push('/PID')

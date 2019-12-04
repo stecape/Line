@@ -34,16 +34,35 @@ export default class WinderTensionController extends Component {
       index: 1
     }
   }
-
   axiosFunc = () => {
-    axios.get('data/ProbeData.html').then(results => {
+    const url = 'http://172.17.5.31/awp/React/ProbeData.html'
+    axios.get(
+      url, 
+      {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+        },
+        crossdomain: true
+      }
+    ).then(results => {
       this.setState(results.data.ProbeData)
     })
   }
 
   componentDidMount() {
     this.axiosFunc()
-    axios.get('data/ProbeData.html').then(results => {
+    const url = 'http://172.17.5.31/awp/React/ProbeData.html'
+    axios.get(
+      url, 
+      {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'POST',
+          'Access-Control-Allow-Headers': ['Content-Type', 'Authorization']
+        },
+        crossdomain: true
+      }
+    ).then(results => {
       this.setState(results.data.ProbeData)
     })
     this.interval = setInterval(this.axiosFunc, 1000)
