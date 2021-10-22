@@ -18,11 +18,10 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
-
+import { MuiThemeProvider, createTheme } from '@material-ui/core/styles'
 import './App.css'
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
     primary: {
       light: '#f9683a',

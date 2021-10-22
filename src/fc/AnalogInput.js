@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import Ramp from '../components/Ramp'
 import TestPoint from '../components/TestPoint'
-import Input from '../components/Input'
+import InputAnch from '../components/InputAnch'
 import Line from '../components/Line'
 import Output from '../components/Output'
 import SwitchNO from '../components/SwitchNO'
@@ -10,121 +10,92 @@ import Typography from '@material-ui/core/Typography'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 
-export default class AnalogInput extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { 
-      selection: "Analog Input 1"
+export default function AnalogInput (props){
+  const [anchors, setAnchors] = useState({
+    In1: [
+      [30, 30],
+      [30, 30],
+      [30, 30],
+      [30, 30]
+    ]
+  });
+  const [results, setResults] = useState({});
+  const [selection, setSelection] = useState({});
+  const [options, setOptions] = useState({});
+
+  const retAnchors = (name, value) => {
+    setAnchors((prevState) => ({ ...prevState, [name]: value }));
+  };
+
+  const getAnchors = (ItemID, anchor) => {
+    try {
+      return anchors[ItemID][anchor];
+    } catch {
+      return [10, 10];
     }
-  }
+  };
 
-  axiosFunc = () => {
-    axios.get('data/Analog Input.html').then(results => {
-      this.setState(results.data[this.state.selection])
-    })
-  }
+  const axiosFunc = () => {
+    axios.get('data/Analog Input.html').then(res => {
+      var data =res.data[selection]
+      Object.keys(data).map((x) => {setResults((prevState) => ({ ...prevState, [x]: data[x]}))})
+  })}
 
-  componentDidMount() {
-    this.axiosFunc()
+  useEffect(() => {
+    axiosFunc()
     axios.get('data/Analog Input.html').then(results => {
       var options = Object.keys(results.data).map( reg => {
         return <MenuItem key={reg} value={reg}>{reg}</MenuItem>
       })
-      this.setState({options: options})
+      setOptions((prevState)=>({...prevState, options: options}))
     })
-    this.interval = setInterval(this.axiosFunc, 1000)
-  }
+    var interval = setInterval(axiosFunc, 1000)
 
-  componentWillUnmount() {
-    clearInterval(this.interval)
-  }
+    // returned function will be called on component unmount 
+    return () => {
+      clearInterval(interval)
+    }
 
-  render() {
+  }, []);
 
-    var bool = (bool) => { return bool === "1" ? true : false }
-    
-    var change = (event) => this.setState({selection: event.target.value})
 
-    return (
-      <div>
-        <Typography variant="title" color="inherit">
-          Analog Input
-        </Typography>
-        <Select onChange={change} value={this.state.selection}>
-          {this.state.options}
-  			</Select>
-        <svg viewBox="0 0 480 270" >
-          <Input
-            x={0}
-            y={28}
-            green={true}
-            textPosOffsetX={0}
-            textPosOffsetY={0}
-            varName="c"
-            varValue={this.state.c}
-          />
-          <Line x1={24} y1={32} x2={70} y2={32} green={true} />
-          <SwitchNO
-            x={70}
-            y={26}
-            green={bool(this.state.enable)}
-            textPosOffsetX={0}
-            textPosOffsetY={0}
-            varName="enable"
-            varValue={bool(this.state.enable)}
-          />
-          <Line x1={82} y1={32} x2={120} y2={32} green={bool(this.state.enable)} />
-          <Ramp
-            x={120}
-            y={20}
-            green={bool(this.state.enable)}
-            textPosOffsetX={0}
-            textPosOffsetY={0}
-            varName="pi"
-            varValue={this.state.pi}
-          />
-          <Line x1={144} y1={32} x2={194} y2={32} green={bool(this.state.enable)} />
-          <TestPoint
-            x={194}
-            y={26}
-            green={bool(this.state.enable)}
-            textPosOffsetX={0}
-            textPosOffsetY={0}
-            varName="h"
-            varValue={this.state.h}
-          />
-          <Line x1={206} y1={32} x2={256} y2={32} green={bool(this.state.enable)} />
-          <SwitchNO
-            x={256}
-            y={26}
-            green={bool(this.state.enable) && bool(this.state.auto)}
-            textPosOffsetX={0}
-            textPosOffsetY={0}
-            varName="auto"
-            varValue={bool(this.state.auto)}
-          />
-          <Line x1={268} y1={32} x2={318} y2={32} green={bool(this.state.enable) && bool(this.state.auto)} />
-          <Ramp
-            x={318}
-            y={20}
-            green={bool(this.state.enable) && bool(this.state.auto)}
-            textPosOffsetX={0}
-            textPosOffsetY={0}
-            varName="g"
-            varValue={this.state.g}
-          />
-          <Line x1={342} y1={32} x2={392} y2={32} green={bool(this.state.enable) && bool(this.state.auto)} />
-          <Output
-            x={392}
-            y={28}
-            green={bool(this.state.enable) && bool(this.state.auto)}
-            textPosOffsetX={0}
-            textPosOffsetY={0}
-            varName="the answer"
-            varValue={this.state.theAnswer}
-          />
-        </svg>
-      </div>
-    )
-  }
+  var bool = (bool) => { return bool === "1" ? true : false }
+  
+  var change = (event) => setSelection({selection: event.target.value})
+
+  return (
+    <div>
+      <Typography variant="title" color="inherit">
+        Analog Input
+      </Typography>
+      <Select onChange={change} value={selection}>
+        {options}
+      </Select>
+      <svg viewBox="0 0 480 270" >
+        <InputAnch
+          ItemID="In1"
+          anchor={0}
+          xy={getAnchors("In1", 0)}
+          green={true}
+          textPosOffsetX={0}
+          textPosOffsetY={0}
+          varName="c"
+          varValue={results.c}
+          retAnchors={retAnchors}
+        />
+        <InputAnch
+          ItemID="In2"
+          anchor={1}
+          xy={getAnchors("In1", 0)}
+          green={true}
+          textPosOffsetX={0}
+          textPosOffsetY={0}
+          varName="c"
+          varValue={results.c}
+          retAnchors={retAnchors}
+        />
+      </svg>
+    </div>
+  )
+
 }
