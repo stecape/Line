@@ -77,7 +77,7 @@ class App extends Component {
             <IconButton className={this.props.classes.menuButton} color="inherit" onClick={this.toggleDrawer(true)} >
               <MenuIcon />
             </IconButton>
-            <Typography variant="title" color="inherit" className={this.props.classes.flex}>
+            <Typography variant="h6" color="inherit" className={this.props.classes.flex}>
               Machine Web Tools
             </Typography>
           </Toolbar>
