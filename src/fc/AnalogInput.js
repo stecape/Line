@@ -175,9 +175,9 @@ export default function AnalogInput (props){
           ItemID="const"
           anchor={0}
           xy={getAnchors("labs", 1)}
-          w={42}
+          w={50}
           varValue={"3.1415926"}
-          green={true}
+          green={false}
           retAnchors={retAnchors}
         />
         <Line

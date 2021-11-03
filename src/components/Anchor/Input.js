@@ -1,15 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types'
 import '../../App.css'
-
-var style = (green) => {
-  return {
-    color: green ? "#bf360c" : "#78909c",
-    fillColor: green ? "#bf360c" : "#78909c",
-    fill: green ? "#bf360c" : "#78909c",
-    stroke: green ? "#bf360c" : "#78909c"
-  };
-};
+import {blockStyle, textStyle, decodeEntities} from '../common.js'
 
 var anchorsSet = (anchor, x, y) => {
   switch (anchor) {
@@ -134,15 +126,7 @@ export default function Input (props) {
   
     return decodeHTMLEntities
   })()
-  
-  var textStyle = {
-    fontFamily: "Verdana",
-    fontSize: 6,
-    strokeWidth: 0.1,
-    fill: 'gray',
-    stroke: 'gray'
-  }
-  
+  decodeEntities()
   return(
     <g>
       <defs>
@@ -152,7 +136,7 @@ export default function Input (props) {
           <rect width="24" height="8" fillOpacity="0.3" cursor="pointer"/>
         </g>
       </defs>
-      <use x={getCoord(props.anchor, xy[0], xy[1])[0]} y={getCoord(props.anchor, xy[0], xy[1])[1]} href={ '#' + props.ItemID } style={style(green)} onClick={() => setToggle(!toggle)}/>
+      <use x={getCoord(props.anchor, xy[0], xy[1])[0]} y={getCoord(props.anchor, xy[0], xy[1])[1]} href={ '#' + props.ItemID } style={blockStyle(green)} onClick={() => setToggle(!toggle)}/>
       { toggle && <text x={getCoord(props.anchor, xy[0], xy[1])[0] + textPosOffsetXY[0]} y={getCoord(props.anchor, xy[0], xy[1])[1]-4 + textPosOffsetXY[1]} style={textStyle}>{props.logic ? varValue ? "true" : "false" : decodeEntities(varValue) }</text> }
       { toggle && <text x={getCoord(props.anchor, xy[0], xy[1])[0] + textPosOffsetXY[0]} y={getCoord(props.anchor, xy[0], xy[1])[1]-14 + textPosOffsetXY[1]} style={textStyle}>{varName}</text> }
     </g>

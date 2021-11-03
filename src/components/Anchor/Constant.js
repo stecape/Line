@@ -10,6 +10,14 @@ var style = (green) => {
     stroke: green ? "#bf360c" : "#78909c"
   };
 };
+  
+var textStyle = {
+  fontFamily: "Verdana",
+  fontSize: 8,
+  strokeWidth: 0.1,
+  fill: 'gray',
+  stroke: 'gray'
+}
 
 var anchorsSet = (anchor, x, y, w) => {
   switch (anchor) {
@@ -76,11 +84,9 @@ var getCoord = (anchor, x, y, w) => {
 
 export default function Constant (props) {
   const [xy, setXy] = useState([-1, -1]);
-  const [w, setW] = useState([-1, -1]);
+  const [w, setW] = useState(42);
   const [green, setGreen] = useState(false);
-  const [textPosOffsetXY, setTextPosOffsetXY] = useState([0, 0]);
   const [varValue, setVarValue] = useState("");
-  const [varName, setVarName] = useState("");
   const [toggle, setToggle] = useState(true);
   const [anchor, setAnchor] = useState(0);
   
@@ -96,6 +102,10 @@ export default function Constant (props) {
 
     if (w !== props.w) {
       setW(props.w);
+      props.retAnchors(
+        props.ItemID,
+        anchorsSet(props.anchor, props.xy[0], props.xy[1], props.w)
+      );
     }
 
     if (green !== props.green) {
@@ -110,7 +120,7 @@ export default function Constant (props) {
       setAnchor(props.anchor);
     }
 
-  }, [xy, textPosOffsetXY, green, varName, varValue, anchor, props]);
+  }, [xy, green, varValue, anchor, w, props]);
 
   var decodeEntities = (() => {
     // this prevents any overhead from creating the object each time
@@ -132,23 +142,15 @@ export default function Constant (props) {
     return decodeHTMLEntities
   })()
   
-  var textStyle = {
-    fontFamily: "Verdana",
-    fontSize: 6,
-    strokeWidth: 0.1,
-    fill: 'gray',
-    stroke: 'gray'
-  }
-  
   return(
     <g>
       <defs>
         <g id={props.ItemID}>
-          <rect width={props.w} height="12" fillOpacity="0.0" cursor="pointer"/>
+          <rect width={w} height="12" fillOpacity="0.0" cursor="pointer"/>
         </g>
       </defs>
       <use x={getCoord(props.anchor, xy[0], xy[1], w)[0]} y={getCoord(props.anchor, xy[0], xy[1], w)[1]} href={ '#' + props.ItemID } style={style(green)} onClick={() => setToggle(!toggle)}/>
-      <text x={getCoord(0, xy[0], xy[1], w)[0] + 2} y={getCoord(0, xy[0], xy[1], w)[1] + 8} style={textStyle}>{decodeEntities(varValue)}</text>
+      <text x={getCoord(0, xy[0], xy[1], w)[0] + 2} y={getCoord(0, xy[0], xy[1], w)[1] + 8} style={textStyle} cursor="pointer">{decodeEntities(varValue)}</text>
     </g>
   )
 }

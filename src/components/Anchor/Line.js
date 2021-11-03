@@ -27,7 +27,7 @@ var getCoord = (anchor, x1y1, x2y2) => {
 var getMarker = (x1, y1, x2, y2, type) => {
   let x = parseFloat(x2)-parseFloat(x1)
   let y = parseFloat(y2)-parseFloat(y1)
-  var deg = Math.atan(y/x) * 180 / Math.PI
+  var deg = x==0 ? 0 : Math.atan(y/x) * 180 / Math.PI
   var ax = parseFloat(x2)-1.4
   var ay = parseFloat(y2)+1.5
   var bx = parseFloat(x2)+1.4
@@ -95,8 +95,8 @@ Line.defaultProps = {
 
 Line.propTypes = {
   ItemID: PropTypes.string,
-  x1y1: PropTypes.number,
-  x2y2: PropTypes.number,
+  x1y1: PropTypes.arrayOf(PropTypes.number),
+  x2y2: PropTypes.arrayOf(PropTypes.number),
   anchor: PropTypes.number,
   startPoint: PropTypes.bool,
   endPoint: PropTypes.bool,
