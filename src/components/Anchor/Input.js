@@ -77,7 +77,7 @@ var getCoord = (anchor, x, y) => {
 
 
 
-export default function InputAnch (props) {
+export default function Input (props) {
   const [xy, setXy] = useState([-1, -1]);
   const [green, setGreen] = useState(false);
   const [textPosOffsetXY, setTextPosOffsetXY] = useState([0, 0]);
@@ -140,7 +140,7 @@ export default function InputAnch (props) {
   
   var textStyle = {
     fontFamily: "Verdana",
-    fontSize: 6,
+    fontSize: 9,
     strokeWidth: 0.1,
     fill: 'gray',
     stroke: 'gray'
@@ -162,7 +162,7 @@ export default function InputAnch (props) {
   )
 }
 
-InputAnch.defaultProps = {
+Input.defaultProps = {
   xy: [0, 0],
   anchor: 0,
   green: false,
@@ -172,7 +172,7 @@ InputAnch.defaultProps = {
   logic: false
 }
 
-InputAnch.propTypes = {
+Input.propTypes = {
   xy: PropTypes.arrayOf(PropTypes.number),
   anchor: PropTypes.number,
   green: PropTypes.bool,

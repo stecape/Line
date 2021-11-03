@@ -40,7 +40,7 @@ var getMarker = (x1, y1, x2, y2, type) => {
   if (type==="arrow") return <polygon points={arrow} transform={'rotate(' + deg + ')'} transform-origin={x2 + " " + y2} /> 
 }
 
-export default function LineAnch (props) {
+export default function Line (props) {
 
   const [x1y1, setX1y1] = useState([-1, -1]);
   const [x2y2, setX2y2] = useState([-1, -1]);
@@ -82,7 +82,7 @@ export default function LineAnch (props) {
   )
 }
 
-LineAnch.defaultProps = {
+Line.defaultProps = {
   x1y1: [0, 0],
   x2y2: [0, 0],
   anchor: 0,
@@ -92,7 +92,7 @@ LineAnch.defaultProps = {
   green: false
 }
 
-LineAnch.propTypes = {
+Line.propTypes = {
   x1y1: PropTypes.number,
   x2y2: PropTypes.number,
   anchor: PropTypes.number,

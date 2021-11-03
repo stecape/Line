@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios'
-import InputAnch from '../components/InputAnch'
-import LineAnch from '../components/LineAnch'
+import Input from '../components/Anchor/Input'
+import Line from '../components/Anchor/Line'
 import Typography from '@material-ui/core/Typography'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -98,8 +98,8 @@ export default function AnalogInput (props){
       <Select onChange={change} value={selection}>
         {options}
       </Select>
-      <svg viewBox="0 0 480 270" >
-        <InputAnch
+      <svg viewBox="0 0 100% 270" preserveAspectRatio="xMinYMin meet">
+        <Input
           ItemID="c"
           anchor={0}
           xy={[30, 30]}
@@ -109,7 +109,7 @@ export default function AnalogInput (props){
           varValue={actual.c}
           retAnchors={retAnchors}
         />
-        <LineAnch
+        <Line
           ItemID="l1"
           anchor={0}
           x1y1={getAnchors("c", 2)}
@@ -117,7 +117,7 @@ export default function AnalogInput (props){
           green={true}
           retAnchors={retAnchors}
         />
-        <InputAnch
+        <Input
           ItemID="Beauty"
           anchor={0}
           xy={getAnchors("l1", 1)}
@@ -128,7 +128,7 @@ export default function AnalogInput (props){
           retAnchors={retAnchors}
           logic
         />
-        <LineAnch
+        <Line
           ItemID="l2"
           anchor={0}
           x1y1={getAnchors("Beauty", 2)}
@@ -136,7 +136,7 @@ export default function AnalogInput (props){
           green={true}
           retAnchors={retAnchors}
         />
-        <LineAnch
+        <Line
           ItemID="l2a"
           anchor={0}
           x1y1={getAnchors("l2", 1)}
@@ -145,7 +145,7 @@ export default function AnalogInput (props){
           retAnchors={retAnchors}
           startPoint
         />
-        <LineAnch
+        <Line
           ItemID="l2b"
           anchor={0}
           x1y1={getAnchors("l2a", 1)}
