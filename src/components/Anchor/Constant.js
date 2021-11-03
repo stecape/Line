@@ -11,37 +11,37 @@ var style = (green) => {
   };
 };
 
-var anchorsSet = (anchor, x, y) => {
+var anchorsSet = (anchor, x, y, w) => {
   switch (anchor) {
     case 0:
       return [
         [x, y],
-        [x + 12, y - 4],
-        [x + 24, y],
-        [x + 12, y + 4]
+        [x + (w/2), y - 6],
+        [x + w, y],
+        [x + (w/2), y + 6]
       ];
 
     case 1:
       return [
-        [x - 12, y + 4],
+        [x - (w/2), y + 6],
         [x, y],
-        [x + 12, y + 4],
-        [x, y + 8]
+        [x + (w/2), y + 6],
+        [x, y + 12]
       ];
 
     case 2:
       return [
-        [x - 24, y],
-        [x - 12, y - 4],
+        [x - w, y],
+        [x - (w/2), y - 6],
         [x, y],
-        [x - 12, y + 4]
+        [x - (w/2), y + 6]
       ];
 
     case 3:
       return [
-        [x - 12, y - 4],
-        [x, y - 8],
-        [x + 12, y - 4],
+        [x - (w/2), y - 6],
+        [x, y - 12],
+        [x + (w/2), y - 6],
         [x, y]
       ];
 
@@ -55,27 +55,28 @@ var anchorsSet = (anchor, x, y) => {
   }
 };
 
-var getCoord = (anchor, x, y) => {
+var getCoord = (anchor, x, y, w) => {
   switch (anchor) {
     case 0:
-      return [x, y - 4];
+      return [x, y - 6];
 
     case 1:
-      return [x - 12, y];
+      return [x - (w/2), y];
 
     case 2:
-      return [x - 24, y - 4];
+      return [x - w, y - 6];
 
     case 3:
-      return [x - 12, y - 8];
+      return [x - (w/2), y - 12];
 
     default:
       return [x, y];
   }
 };
 
-export default function Input (props) {
+export default function Constant (props) {
   const [xy, setXy] = useState([-1, -1]);
+  const [w, setW] = useState([-1, -1]);
   const [green, setGreen] = useState(false);
   const [textPosOffsetXY, setTextPosOffsetXY] = useState([0, 0]);
   const [varValue, setVarValue] = useState("");
@@ -89,20 +90,16 @@ export default function Input (props) {
       setXy(props.xy);
       props.retAnchors(
         props.ItemID,
-        anchorsSet(props.anchor, props.xy[0], props.xy[1])
+        anchorsSet(props.anchor, props.xy[0], props.xy[1], w)
       );
     }
 
-    if (JSON.stringify(textPosOffsetXY) !== JSON.stringify(props.textPosOffsetXY)) {
-      setTextPosOffsetXY(props.textPosOffsetXY);
+    if (w !== props.w) {
+      setW(props.w);
     }
 
     if (green !== props.green) {
       setGreen(props.green);
-    }
-
-    if (varName !== props.varName) {
-      setVarName(props.varName);
     }
 
     if (varValue !== props.varValue) {
@@ -147,39 +144,33 @@ export default function Input (props) {
     <g>
       <defs>
         <g id={props.ItemID}>
-          <line x1="18" y1="0" x2="24" y2="4" />
-          <line x1="18" y1="8" x2="24" y2="4" />
-          <rect width="24" height="8" fillOpacity="0.3" cursor="pointer"/>
+          <rect width={props.w} height="12" fillOpacity="0.0" cursor="pointer"/>
         </g>
       </defs>
-      <use x={getCoord(props.anchor, xy[0], xy[1])[0]} y={getCoord(props.anchor, xy[0], xy[1])[1]} href={ '#' + props.ItemID } style={style(green)} onClick={() => setToggle(!toggle)}/>
-      { toggle && <text x={getCoord(props.anchor, xy[0], xy[1])[0] + textPosOffsetXY[0]} y={getCoord(props.anchor, xy[0], xy[1])[1]-4 + textPosOffsetXY[1]} style={textStyle}>{props.logic ? varValue ? "true" : "false" : decodeEntities(varValue) }</text> }
-      { toggle && <text x={getCoord(props.anchor, xy[0], xy[1])[0] + textPosOffsetXY[0]} y={getCoord(props.anchor, xy[0], xy[1])[1]-14 + textPosOffsetXY[1]} style={textStyle}>{varName}</text> }
+      <use x={getCoord(props.anchor, xy[0], xy[1], w)[0]} y={getCoord(props.anchor, xy[0], xy[1], w)[1]} href={ '#' + props.ItemID } style={style(green)} onClick={() => setToggle(!toggle)}/>
+      <text x={getCoord(0, xy[0], xy[1], w)[0] + 2} y={getCoord(0, xy[0], xy[1], w)[1] + 8} style={textStyle}>{decodeEntities(varValue)}</text>
     </g>
   )
 }
 
-Input.defaultProps = {
+Constant.defaultProps = {
   ItemID: "Goku",
   xy: [0, 0],
+  w: 12,
   anchor: 0,
   green: false,
-  textPosOffsetXY: [0, 0],
   varValue: "",
-  varName: "",
   logic: false
 }
 
-Input.propTypes = {
+Constant.propTypes = {
   ItemID: PropTypes.string,
   xy: PropTypes.arrayOf(PropTypes.number),
+  w: PropTypes.number,
   anchor: PropTypes.number,
   green: PropTypes.bool,
-  textPosOffsetXY: PropTypes.arrayOf(PropTypes.number),
   varValue: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.bool,
-  ]),
-  varName: PropTypes.string,
-  logic: PropTypes.bool
+  ])
 }

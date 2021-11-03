@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import '../App.css'
 
 
-export default class Costant extends Component {
+export default class Constant extends Component {
   constructor(props){
     super(props)
 
@@ -75,7 +75,7 @@ export default class Costant extends Component {
   }
 }
 
-Costant.defaultProps = {
+Constant.defaultProps = {
   x: 0,
   y: 0,
   w: 24,
@@ -83,7 +83,7 @@ Costant.defaultProps = {
   varValue: ""
 }
 
-Costant.propTypes = {
+Constant.propTypes = {
   x: PropTypes.number,
   y: PropTypes.number,
   w: PropTypes.number,

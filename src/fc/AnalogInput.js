@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios'
 import Input from '../components/Anchor/Input'
 import Line from '../components/Anchor/Line'
+import Absolut from '../components/Anchor/Absolut'
+import Constant from '../components/Anchor/Constant'
 import Typography from '@material-ui/core/Typography'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -98,11 +100,11 @@ export default function AnalogInput (props){
       <Select onChange={change} value={selection}>
         {options}
       </Select>
-      <svg viewBox="0 0 100% 270" preserveAspectRatio="xMinYMin meet">
+      <svg viewBox="0 0 100% 270" transform="scale(1.5 1.5)" preserveAspectRatio="xMinYMin meet">
         <Input
           ItemID="c"
           anchor={0}
-          xy={[30, 30]}
+          xy={[20, 50]}
           green={true}
           textPosOffsetXY={[0, 0]}
           varName="c"
@@ -153,6 +155,46 @@ export default function AnalogInput (props){
           green={true}
           retAnchors={retAnchors}
           arrow
+        />
+        <Absolut
+          ItemID="abs"
+          anchor={0}
+          xy={getAnchors("l2b", 1)}
+          green={true}
+          retAnchors={retAnchors}
+        />
+        <Line
+          ItemID="labs"
+          anchor={0}
+          x1y1={getAnchors("abs", 2)}
+          x2y2={getAnchors("abs", 2,[24, 0])}
+          green={true}
+          retAnchors={retAnchors}
+        />
+        <Constant
+          ItemID="const"
+          anchor={0}
+          xy={getAnchors("labs", 1)}
+          w={42}
+          varValue={"3.1415926"}
+          green={true}
+          retAnchors={retAnchors}
+        />
+        <Line
+          ItemID="constl1"
+          anchor={0}
+          x1y1={getAnchors("const", 2)}
+          x2y2={getAnchors("const", 2,[6, 0])}
+          green={true}
+          retAnchors={retAnchors}
+        />
+        <Line
+          ItemID="constl2"
+          anchor={0}
+          x1y1={getAnchors("constl1", 1)}
+          x2y2={getAnchors("constl1", 1,[0, 12])}
+          green={true}
+          retAnchors={retAnchors}
         />
       </svg>
     </div>

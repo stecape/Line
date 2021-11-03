@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types'
-import '../App.css'
+import '../../App.css'
 
 var style = (green) => {
   return {
@@ -83,6 +83,7 @@ export default function Line (props) {
 }
 
 Line.defaultProps = {
+  ItemID: "Goku",
   x1y1: [0, 0],
   x2y2: [0, 0],
   anchor: 0,
@@ -93,6 +94,7 @@ Line.defaultProps = {
 }
 
 Line.propTypes = {
+  ItemID: PropTypes.string,
   x1y1: PropTypes.number,
   x2y2: PropTypes.number,
   anchor: PropTypes.number,
