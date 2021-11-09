@@ -8,17 +8,18 @@ import DiameterCalculation from './fc/DiameterCalculation'
 import PID from './fc/PID'
 import GenericController from './fc/GenericController'
 import WinderTensionController from './fc/WinderTensionController'
-import Drawer from '@material-ui/core/Drawer'
-import List from '@material-ui/core/List'
-import Paper from '@material-ui/core/Paper'
+import Drawer from '@mui/material/Drawer'
+import List from '@mui/material/List'
+import Paper from '@mui/material/Paper'
 import FcListItems from './fc/FcListItems'
-import { withStyles } from '@material-ui/core/styles'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
-import IconButton from '@material-ui/core/IconButton'
-import MenuIcon from '@material-ui/icons/Menu'
-import { MuiThemeProvider, createTheme } from '@material-ui/core/styles'
+import { adaptV4Theme } from '@mui/material/styles';
+import withStyles from '@mui/styles/withStyles';
+import AppBar from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar'
+import Typography from '@mui/material/Typography'
+import IconButton from '@mui/material/IconButton'
+import MenuIcon from '@mui/icons-material/Menu'
+import { ThemeProvider, StyledEngineProvider, createTheme } from '@mui/material/styles';
 import './App.css'
 
 const theme = createTheme({
@@ -71,43 +72,49 @@ class App extends Component {
 
   render() {
     return (
-      <MuiThemeProvider theme={theme}>
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton className={this.props.classes.menuButton} color="inherit" onClick={this.toggleDrawer(true)} >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" color="inherit" className={this.props.classes.flex}>
-              Machine Web Tools
-            </Typography>
-          </Toolbar>
-        </AppBar>
-        <Paper>
-          <Drawer open={this.state.drawer} onClose={this.toggleDrawer(false)}>
-            <div
-              tabIndex={0}
-              onClick={this.toggleDrawer(false)}
-              onKeyDown={this.toggleDrawer(false)}
-            >
-              <List><FcListItems/></List>
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={theme}>
+          <AppBar position="static">
+            <Toolbar>
+              <IconButton
+                className={this.props.classes.menuButton}
+                color="inherit"
+                onClick={this.toggleDrawer(true)}
+                size="large">
+                <MenuIcon />
+              </IconButton>
+              <Typography variant="h6" color="inherit" className={this.props.classes.flex}>
+                Machine Web Tools
+              </Typography>
+            </Toolbar>
+          </AppBar>
+          <Paper>
+            <Drawer open={this.state.drawer} onClose={this.toggleDrawer(false)}>
+              <div
+                tabIndex={0}
+                onClick={this.toggleDrawer(false)}
+                onKeyDown={this.toggleDrawer(false)}
+              >
+                <List><FcListItems/></List>
+              </div>
+            </Drawer>
+            <div className={this.props.classes.paperContent}>
+              <Switch >
+                <Redirect from='/index.html' to='/'/>
+                <Route exact path="/" component={Home}/>
+                <Route path="/Regulator" component={Regulator}/>
+                <Route path="/AnalogInput" component={AnalogInput}/>
+                <Route path="/AnalogOutput" component={AnalogOutput}/>
+                <Route path="/DiameterCalculation" component={DiameterCalculation}/>
+                <Route path="/PID" component={PID}/>
+                <Route path="/GenericController" component={GenericController}/>
+                <Route path="/WinderTensionController" component={WinderTensionController}/>
+              </Switch>
             </div>
-          </Drawer>
-          <div className={this.props.classes.paperContent}>
-            <Switch >
-              <Redirect from='/index.html' to='/'/>
-              <Route exact path="/" component={Home}/>
-              <Route path="/Regulator" component={Regulator}/>
-              <Route path="/AnalogInput" component={AnalogInput}/>
-              <Route path="/AnalogOutput" component={AnalogOutput}/>
-              <Route path="/DiameterCalculation" component={DiameterCalculation}/>
-              <Route path="/PID" component={PID}/>
-              <Route path="/GenericController" component={GenericController}/>
-              <Route path="/WinderTensionController" component={WinderTensionController}/>
-            </Switch>
-          </div>
-        </Paper>
-      </MuiThemeProvider>
-    )
+          </Paper>
+        </ThemeProvider>
+      </StyledEngineProvider>
+    );
   }
 }
 

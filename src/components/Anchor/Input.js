@@ -107,25 +107,6 @@ export default function Input (props) {
 
   }, [xy, textPosOffsetXY, green, varName, varValue, anchor, props]);
 
-  var decodeEntities = (() => {
-    // this prevents any overhead from creating the object each time
-    var element = document.createElement('div');
-  
-    function decodeHTMLEntities (str) {
-      if(str && typeof str === 'string') {
-        // strip script/html tags
-        str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '')
-        str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '')
-        element.innerHTML = str
-        str = element.textContent
-        element.textContent = ''
-      }
-  
-      return str
-    }
-  
-    return decodeHTMLEntities
-  })()
   decodeEntities()
   return(
     <g>
@@ -163,6 +144,7 @@ Input.propTypes = {
   varValue: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.bool,
+    PropTypes.number
   ]),
   varName: PropTypes.string,
   logic: PropTypes.bool

@@ -4,9 +4,11 @@ import Input from '../components/Anchor/Input'
 import Line from '../components/Anchor/Line'
 import Absolut from '../components/Anchor/Absolut'
 import Constant from '../components/Anchor/Constant'
-import Typography from '@material-ui/core/Typography'
-import Select from '@material-ui/core/Select'
-import MenuItem from '@material-ui/core/MenuItem'
+import Derivative from '../components/Anchor/Derivative'
+import Typography from '@mui/material/Typography'
+import Select from '@mui/material/Select'
+import MenuItem from '@mui/material/MenuItem'
+import Grid from '@mui/material/Grid'
 
 export default function AnalogInput (props){
 
@@ -93,111 +95,132 @@ export default function AnalogInput (props){
   var change = (event) => setSelection(event.target.value)
 
   return (
-    <div>
-      <Typography variant="h4" color="inherit">
-        {PageTitle}
-      </Typography>
-      <Select onChange={change} value={selection}>
-        {options}
-      </Select>
-      <svg viewBox="0 0 100% 270" transform="scale(1.5 1.5)" preserveAspectRatio="xMinYMin meet">
-        <Input
-          ItemID="c"
-          anchor={0}
-          xy={[20, 50]}
-          green={true}
-          textPosOffsetXY={[0, 0]}
-          varName="c"
-          varValue={actual.c}
-          retAnchors={retAnchors}
-        />
-        <Line
-          ItemID="l1"
-          anchor={0}
-          x1y1={getAnchors("c", 2)}
-          x2y2={getAnchors("c", 2,[30, 0])}
-          green={true}
-          retAnchors={retAnchors}
-        />
-        <Input
-          ItemID="Beauty"
-          anchor={0}
-          xy={getAnchors("l1", 1)}
-          green={true}
-          textPosOffsetXY={[0, 0]}
-          varName="beauty"
-          varValue={bool(actual.beauty)}
-          retAnchors={retAnchors}
-          logic
-        />
-        <Line
-          ItemID="l2"
-          anchor={0}
-          x1y1={getAnchors("Beauty", 2)}
-          x2y2={getAnchors("Beauty", 2,[30, 0])}
-          green={true}
-          retAnchors={retAnchors}
-        />
-        <Line
-          ItemID="l2a"
-          anchor={0}
-          x1y1={getAnchors("l2", 1)}
-          x2y2={getAnchors("l2", 1,[0, 25])}
-          green={true}
-          retAnchors={retAnchors}
-          startPoint
-        />
-        <Line
-          ItemID="l2b"
-          anchor={0}
-          x1y1={getAnchors("l2a", 1)}
-          x2y2={getAnchors("l2a", 1,[20, 0])}
-          green={true}
-          retAnchors={retAnchors}
-          arrow
-        />
-        <Absolut
-          ItemID="abs"
-          anchor={0}
-          xy={getAnchors("l2b", 1)}
-          green={true}
-          retAnchors={retAnchors}
-        />
-        <Line
-          ItemID="labs"
-          anchor={0}
-          x1y1={getAnchors("abs", 2)}
-          x2y2={getAnchors("abs", 2,[24, 0])}
-          green={true}
-          retAnchors={retAnchors}
-        />
-        <Constant
-          ItemID="const"
-          anchor={0}
-          xy={getAnchors("labs", 1)}
-          w={50}
-          varValue={"3.1415926"}
-          green={false}
-          retAnchors={retAnchors}
-        />
-        <Line
-          ItemID="constl1"
-          anchor={0}
-          x1y1={getAnchors("const", 2)}
-          x2y2={getAnchors("const", 2,[6, 0])}
-          green={true}
-          retAnchors={retAnchors}
-        />
-        <Line
-          ItemID="constl2"
-          anchor={0}
-          x1y1={getAnchors("constl1", 1)}
-          x2y2={getAnchors("constl1", 1,[0, 12])}
-          green={true}
-          retAnchors={retAnchors}
-        />
-      </svg>
-    </div>
+    <Grid container spacing={2}>
+      <Grid item sm={8}>
+          <Typography variant="h4" color="inherit">
+            {PageTitle}
+          </Typography>
+      </Grid>
+      <Grid item sm={4}>
+        <Select onChange={change} value={selection}>
+          {options}
+        </Select>
+      </Grid>
+      <Grid item xs={12}>
+        <svg width="100%" height="100%" overflow="auto" preserveAspectRatio="none">
+          <Input
+            ItemID="c"
+            anchor={0}
+            xy={[20, 50]}
+            green={true}
+            textPosOffsetXY={[0, 0]}
+            varName="c"
+            varValue={actual.c}
+            retAnchors={retAnchors}
+          />
+          <Line
+            ItemID="l1"
+            anchor={0}
+            x1y1={getAnchors("c", 2)}
+            x2y2={getAnchors("c", 2,[30, 0])}
+            green={true}
+            retAnchors={retAnchors}
+          />
+          <Input
+            ItemID="Beauty"
+            anchor={0}
+            xy={getAnchors("l1", 1)}
+            green={true}
+            textPosOffsetXY={[0, 0]}
+            varName="beauty"
+            varValue={bool(actual.beauty)}
+            retAnchors={retAnchors}
+            logic
+          />
+          <Line
+            ItemID="l2"
+            anchor={0}
+            x1y1={getAnchors("Beauty", 2)}
+            x2y2={getAnchors("Beauty", 2,[30, 0])}
+            green={true}
+            retAnchors={retAnchors}
+          />
+          <Line
+            ItemID="l2a"
+            anchor={0}
+            x1y1={getAnchors("l2", 1)}
+            x2y2={getAnchors("l2", 1,[0, 25])}
+            green={true}
+            retAnchors={retAnchors}
+            startPoint
+          />
+          <Line
+            ItemID="l2b"
+            anchor={0}
+            x1y1={getAnchors("l2a", 1)}
+            x2y2={getAnchors("l2a", 1,[20, 0])}
+            green={true}
+            retAnchors={retAnchors}
+            arrow
+          />
+          <Absolut
+            ItemID="abs"
+            anchor={0}
+            xy={getAnchors("l2b", 1)}
+            green={true}
+            retAnchors={retAnchors}
+          />
+          <Line
+            ItemID="labs"
+            anchor={0}
+            x1y1={getAnchors("abs", 2)}
+            x2y2={getAnchors("abs", 2,[24, 0])}
+            green={true}
+            retAnchors={retAnchors}
+          />
+          <Constant
+            ItemID="const"
+            anchor={0}
+            xy={getAnchors("labs", 1)}
+            w={50}
+            varValue={"3.1415926"}
+            green={false}
+            retAnchors={retAnchors}
+          />
+          <Line
+            ItemID="constl1"
+            anchor={0}
+            x1y1={getAnchors("const", 2)}
+            x2y2={getAnchors("const", 2,[60, 0])}
+            green={true}
+            retAnchors={retAnchors}
+          />
+          <Line
+            ItemID="constl2"
+            anchor={0}
+            x1y1={getAnchors("constl1", 1)}
+            x2y2={getAnchors("constl1", 1,[0, 12])}
+            green={true}
+            retAnchors={retAnchors}
+          />
+          <Line
+            ItemID="constl3"
+            anchor={0}
+            x1y1={getAnchors("constl2", 1)}
+            x2y2={getAnchors("constl2", 1,[12, 0])}
+            green={true}
+            retAnchors={retAnchors}
+          />
+          <Derivative
+            ItemID="der"
+            anchor={0}
+            xy={getAnchors("constl3", 1)}
+            green={true}
+            retAnchors={retAnchors}
+          />
+        </svg>
+      </Grid>
+    </Grid>
   )
 
 }

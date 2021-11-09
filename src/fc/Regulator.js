@@ -6,9 +6,9 @@ import Input from '../components/Input'
 import Line from '../components/Line'
 import Output from '../components/Output'
 import SwitchNO from '../components/SwitchNO'
-import Typography from '@material-ui/core/Typography'
-import Select from '@material-ui/core/Select'
-import MenuItem from '@material-ui/core/MenuItem'
+import Typography from '@mui/material/Typography'
+import Select from '@mui/material/Select'
+import MenuItem from '@mui/material/MenuItem'
 
 export default class Regulator extends Component {
   constructor(props) {

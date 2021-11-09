@@ -18,7 +18,7 @@ import Divide from '../components/Divide'
 import Integrative from '../components/Integrative'
 import Derivative from '../components/Derivative'
 import IndexInput from '../components/IndexInput'
-import Typography from '@material-ui/core/Typography'
+import Typography from '@mui/material/Typography'
 
 export default class PID extends Component {
   constructor(props) {

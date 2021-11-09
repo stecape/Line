@@ -1,23 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types'
 import '../../App.css'
-
-var style = (green) => {
-  return {
-    color: green ? "#bf360c" : "#78909c",
-    fillColor: green ? "#bf360c" : "#78909c",
-    fill: green ? "#bf360c" : "#78909c",
-    stroke: green ? "#bf360c" : "#78909c"
-  };
-};
-  
-var textStyle = {
-  fontFamily: "Verdana",
-  fontSize: 8,
-  strokeWidth: 0.1,
-  fill: 'gray',
-  stroke: 'gray'
-}
+import {blockStyle, textStyle, decodeEntities} from '../common.js'
 
 var anchorsSet = (anchor, x, y, w) => {
   switch (anchor) {
@@ -121,26 +105,8 @@ export default function Constant (props) {
     }
 
   }, [xy, green, varValue, anchor, w, props]);
-
-  var decodeEntities = (() => {
-    // this prevents any overhead from creating the object each time
-    var element = document.createElement('div');
   
-    function decodeHTMLEntities (str) {
-      if(str && typeof str === 'string') {
-        // strip script/html tags
-        str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '')
-        str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '')
-        element.innerHTML = str
-        str = element.textContent
-        element.textContent = ''
-      }
-  
-      return str
-    }
-  
-    return decodeHTMLEntities
-  })()
+  decodeEntities()
   
   return(
     <g>
@@ -149,7 +115,7 @@ export default function Constant (props) {
           <rect width={w} height="12" fillOpacity="0.0" cursor="pointer"/>
         </g>
       </defs>
-      <use x={getCoord(props.anchor, xy[0], xy[1], w)[0]} y={getCoord(props.anchor, xy[0], xy[1], w)[1]} href={ '#' + props.ItemID } style={style(green)} onClick={() => setToggle(!toggle)}/>
+      <use x={getCoord(props.anchor, xy[0], xy[1], w)[0]} y={getCoord(props.anchor, xy[0], xy[1], w)[1]} href={ '#' + props.ItemID } style={blockStyle(green)} onClick={() => setToggle(!toggle)}/>
       <text x={getCoord(0, xy[0], xy[1], w)[0] + 2} y={getCoord(0, xy[0], xy[1], w)[1] + 8} style={textStyle} cursor="pointer">{decodeEntities(varValue)}</text>
     </g>
   )

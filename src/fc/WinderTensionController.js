@@ -25,7 +25,7 @@ import Sum from '../components/Sum'
 import Multiply from '../components/Multiply'
 import Divide from '../components/Divide'
 import IndexInput from '../components/IndexInput'
-import Typography from '@material-ui/core/Typography'
+import Typography from '@mui/material/Typography'
 
 export default class WinderTensionController extends Component {
   constructor(props) {

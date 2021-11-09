@@ -7,7 +7,7 @@ import SwitchNC from '../components/SwitchNC'
 import Inversion from '../components/Inversion'
 import Difference from '../components/Difference'
 import IndexInput from '../components/IndexInput'
-import Typography from '@material-ui/core/Typography'
+import Typography from '@mui/material/Typography'
 
 export default class GenericController extends Component {
   constructor(props) {

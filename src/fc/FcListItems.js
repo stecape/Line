@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { withRouter, matchPath } from 'react-router'
-import MenuItem from '@material-ui/core/MenuItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
-import HomeIcon from '@material-ui/icons/Home'
-import CachedIcon from '@material-ui/icons/Cached'
-import CallReceivedIcon from '@material-ui/icons/CallReceived'
-import CallMadeIcon from '@material-ui/icons/CallMade'
-import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
+import MenuItem from '@mui/material/MenuItem'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import ListItemText from '@mui/material/ListItemText'
+import HomeIcon from '@mui/icons-material/Home'
+import CachedIcon from '@mui/icons-material/Cached'
+import CallReceivedIcon from '@mui/icons-material/CallReceived'
+import CallMadeIcon from '@mui/icons-material/CallMade'
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord'
 
 class FcListItems extends Component {
   render () {
@@ -22,49 +22,49 @@ class FcListItems extends Component {
     }
     return(
       <div>
-        <MenuItem button divider component={Link} to="/" selected={isSelected("/")} >
+        <MenuItem divider component={Link} to="/" selected={isSelected("/")} >
           <ListItemIcon>
             <HomeIcon />
           </ListItemIcon>
           <ListItemText primary="Home" />
         </MenuItem>
-        <MenuItem button component={Link} to="/Regulator" selected={isSelected("/Regulator")}>
+        <MenuItem component={Link} to="/Regulator" selected={isSelected("/Regulator")}>
           <ListItemIcon>
             <CachedIcon />
           </ListItemIcon>
           <ListItemText primary="Regulator" />
         </MenuItem>
-        <MenuItem button component={Link} to="/AnalogInput" selected={isSelected("/AnalogInput")}>
+        <MenuItem component={Link} to="/AnalogInput" selected={isSelected("/AnalogInput")}>
           <ListItemIcon>
             <CallReceivedIcon />
           </ListItemIcon>
           <ListItemText primary="Analog Input" />
         </MenuItem>
-        <MenuItem button component={Link} to="/AnalogOutput" selected={isSelected("/AnalogOutput")}>
+        <MenuItem component={Link} to="/AnalogOutput" selected={isSelected("/AnalogOutput")}>
           <ListItemIcon>
             <CallMadeIcon />
           </ListItemIcon>
           <ListItemText primary="Analog Output" />
         </MenuItem>
-        <MenuItem button component={Link} to="/DiameterCalculation" selected={isSelected("/DiameterCalculation")}>
+        <MenuItem component={Link} to="/DiameterCalculation" selected={isSelected("/DiameterCalculation")}>
           <ListItemIcon>
             <FiberManualRecordIcon />
           </ListItemIcon>
           <ListItemText primary="Diameter Calculation" />
         </MenuItem>
-        <MenuItem button component={Link} to="/GenericCntroller" selected={isSelected("/GenericCntroller")}>
+        <MenuItem component={Link} to="/GenericCntroller" selected={isSelected("/GenericCntroller")}>
           <ListItemIcon>
             <FiberManualRecordIcon />
           </ListItemIcon>
           <ListItemText primary="Generic Cntroller" />
         </MenuItem>
-        <MenuItem button component={Link} to="/WinderTensionController" selected={isSelected("/WinderTensionController")}>
+        <MenuItem component={Link} to="/WinderTensionController" selected={isSelected("/WinderTensionController")}>
           <ListItemIcon>
             <FiberManualRecordIcon />
           </ListItemIcon>
           <ListItemText primary="WinderTensionController" />
         </MenuItem>
-        <MenuItem button component={Link} to="/PID" selected={isSelected("/PID")}>
+        <MenuItem component={Link} to="/PID" selected={isSelected("/PID")}>
           <ListItemIcon>
             <FiberManualRecordIcon />
           </ListItemIcon>

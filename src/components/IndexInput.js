@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import PropTypes from 'prop-types'
 import '../App.css'
-import TextField from '@material-ui/core/TextField'
+import TextField from '@mui/material/TextField'
 
 
 export default class IndexInput extends Component {
