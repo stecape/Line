@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import TestPoint from '../components/TestPoint'
+import TestPoint from '../components/LOD/TestPoint'
 import Absolut from '../components/LOD/Absolut'
 import Input from '../components/LOD/Input'
 import Costant from '../components/LOD/Constant'

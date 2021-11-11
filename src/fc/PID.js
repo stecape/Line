@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import TestPoint from '../components/TestPoint'
+import TestPoint from '../components/LOD/TestPoint'
 import Input from '../components/LOD/Input'
 import InternalReference from '../components/LOD/InternalReference'
 import Line from '../components/LOD/Line'

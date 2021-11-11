@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import Ramp from '../components/Ramp'
-import TestPoint from '../components/TestPoint'
+import TestPoint from '../components/LOD/TestPoint'
 import Input from '../components/LOD/Input'
 import Line from '../components/LOD/Line'
 import Output from '../components/LOD/Output'
