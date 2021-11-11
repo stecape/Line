@@ -4,8 +4,8 @@ import Typography from '@mui/material/Typography'
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 
-import InputAnch from '../components/InputAnch'
-import LineAnch from '../components/LineAnch'
+import Connector from '../components/Anchor/Connector'
+import Line from '../components/Anchor/Line'
 
 
 export default function FCTemplate (props){ //CUSTOMIZE HERE
@@ -101,7 +101,7 @@ export default function FCTemplate (props){ //CUSTOMIZE HERE
         {options}
       </Select>
       <svg viewBox="0 0 480 270" > {/* CUSTOMIZE HERE*/}
-        <InputAnch
+        <Connector
           ItemID="c"
           anchor={0}
           xy={[30, 30]}
@@ -111,7 +111,7 @@ export default function FCTemplate (props){ //CUSTOMIZE HERE
           varValue={actual.c}
           retAnchors={retAnchors}
         />
-        <LineAnch
+        <Line
           ItemID="l1"
           anchor={0}
           x1y1={getAnchors("c", 2)}
@@ -119,7 +119,7 @@ export default function FCTemplate (props){ //CUSTOMIZE HERE
           green={true}
           retAnchors={retAnchors}
         />
-        <InputAnch
+        <Connector
           ItemID="Beauty"
           anchor={0}
           xy={getAnchors("l1", 1)}
@@ -130,7 +130,7 @@ export default function FCTemplate (props){ //CUSTOMIZE HERE
           retAnchors={retAnchors}
           logic
         />
-        <LineAnch
+        <Line
           ItemID="l2"
           anchor={0}
           x1y1={getAnchors("Beauty", 2)}
@@ -138,7 +138,7 @@ export default function FCTemplate (props){ //CUSTOMIZE HERE
           green={true}
           retAnchors={retAnchors}
         />
-        <LineAnch
+        <Line
           ItemID="l2a"
           anchor={0}
           x1y1={getAnchors("l2", 1)}
@@ -147,7 +147,7 @@ export default function FCTemplate (props){ //CUSTOMIZE HERE
           retAnchors={retAnchors}
           startPoint
         />
-        <LineAnch
+        <Line
           ItemID="l2b"
           anchor={0}
           x1y1={getAnchors("l2a", 1)}

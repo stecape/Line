@@ -106,8 +106,6 @@ export default function Constant (props) {
 
   }, [xy, green, varValue, anchor, w, props]);
   
-  decodeEntities()
-  
   return(
     <g>
       <defs>
@@ -115,7 +113,7 @@ export default function Constant (props) {
           <rect width={w} height="12" fillOpacity="0.0" cursor="pointer"/>
         </g>
       </defs>
-      <use x={getCoord(props.anchor, xy[0], xy[1], w)[0]} y={getCoord(props.anchor, xy[0], xy[1], w)[1]} href={ '#' + props.ItemID } style={blockStyle(green)} onClick={() => setToggle(!toggle)}/>
+      <use x={getCoord(anchor, xy[0], xy[1], w)[0]} y={getCoord(anchor, xy[0], xy[1], w)[1]} href={ '#' + props.ItemID } style={blockStyle(green)} onClick={() => setToggle(!toggle)}/>
       <text x={getCoord(0, xy[0], xy[1], w)[0] + 2} y={getCoord(0, xy[0], xy[1], w)[1] + 8} style={textStyle} cursor="pointer">{decodeEntities(varValue)}</text>
     </g>
   )

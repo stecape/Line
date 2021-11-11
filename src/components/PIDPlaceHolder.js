@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import PropTypes from 'prop-types'
 import Limitator from './Limitator'
-import Line from './Line'
+import Line from './LOD/Line'
 import '../App.css'
 
 import {withRouter} from "react-router-dom";

@@ -67,7 +67,7 @@ var getCoord = (anchor, x, y) => {
   }
 };
 
-export default function Absolut (props) {
+export default function Integrative (props) {
   const [xy, setXy] = useState([-1, -1]);
   const [green, setGreen] = useState(false);
   const [anchor, setAnchor] = useState(0);
@@ -91,16 +91,13 @@ export default function Absolut (props) {
     }
 
   }, [xy, green, anchor, props]);
-
+    
   return(
     <g>
       <defs>
         <g id={props.ItemID}>
           <rect width="12" height="12" fill="none" />
-          <line x1="2" y1="2" x2="6" y2="6" />
-          <line x1="6" y1="6" x2="10" y2="2" />
-          <line x1="6" y1="2" x2="6" y2="10" />
-          <line x1="2" y1="6" x2="10" y2="6" />
+          <text x="4" y="8" style={textStyle}>&int;</text>
         </g>
       </defs>
       <use x={getCoord(anchor, xy[0], xy[1])[0]} y={getCoord(anchor, xy[0], xy[1])[1]} href={ '#' + props.ItemID } style={blockStyle(green)} />
@@ -108,16 +105,16 @@ export default function Absolut (props) {
   )
 }
 
-Absolut.defaultProps = {
+Integrative.defaultProps = {
   ItemID: "Goku",
   xy: [0, 0],
   anchor: 0,
   green: false,
 }
 
-Absolut.propTypes = {
+Integrative.propTypes = {
   ItemID: PropTypes.string,
   xy: PropTypes.arrayOf(PropTypes.number),
   anchor: PropTypes.number,
-  green: PropTypes.bool
+  green: PropTypes.bool,
 }

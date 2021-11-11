@@ -66,7 +66,7 @@ var getCoord = (anchor, x, y) => {
   }
 };
 
-export default function Input (props) {
+export default function Connector (props) {
   const [xy, setXy] = useState([-1, -1]);
   const [green, setGreen] = useState(false);
   const [textPosOffsetXY, setTextPosOffsetXY] = useState([0, 0]);
@@ -107,24 +107,23 @@ export default function Input (props) {
 
   }, [xy, textPosOffsetXY, green, varName, varValue, anchor, props]);
 
-  decodeEntities()
   return(
     <g>
       <defs>
         <g id={props.ItemID}>
-          <line x1="18" y1="0" x2="24" y2="4" />
-          <line x1="18" y1="8" x2="24" y2="4" />
+          { props.input && <><line x1="18" y1="0" x2="24" y2="4" /><line x1="18" y1="8" x2="24" y2="4" /></> }
+          { props.output && <><line x1="0" y1="0" x2="4" y2="4" /><line x1="0" y1="8" x2="4" y2="4" /></> }
           <rect width="24" height="8" fillOpacity="0.3" cursor="pointer"/>
         </g>
       </defs>
-      <use x={getCoord(props.anchor, xy[0], xy[1])[0]} y={getCoord(props.anchor, xy[0], xy[1])[1]} href={ '#' + props.ItemID } style={blockStyle(green)} onClick={() => setToggle(!toggle)}/>
-      { toggle && <text x={getCoord(props.anchor, xy[0], xy[1])[0] + textPosOffsetXY[0]} y={getCoord(props.anchor, xy[0], xy[1])[1]-4 + textPosOffsetXY[1]} style={textStyle}>{props.logic ? varValue ? "true" : "false" : decodeEntities(varValue) }</text> }
-      { toggle && <text x={getCoord(props.anchor, xy[0], xy[1])[0] + textPosOffsetXY[0]} y={getCoord(props.anchor, xy[0], xy[1])[1]-14 + textPosOffsetXY[1]} style={textStyle}>{varName}</text> }
+      <use x={getCoord(anchor, xy[0], xy[1])[0]} y={getCoord(anchor, xy[0], xy[1])[1]} href={ '#' + props.ItemID } style={blockStyle(green)} onClick={() => setToggle(!toggle)}/>
+      { toggle && <text x={getCoord(anchor, xy[0], xy[1])[0] + textPosOffsetXY[0]} y={getCoord(anchor, xy[0], xy[1])[1]-4 + textPosOffsetXY[1]} style={textStyle}>{props.logic ? varValue ? "true" : "false" : decodeEntities(varValue) }</text> }
+      { toggle && <text x={getCoord(anchor, xy[0], xy[1])[0] + textPosOffsetXY[0]} y={getCoord(anchor, xy[0], xy[1])[1]-14 + textPosOffsetXY[1]} style={textStyle}>{varName}</text> }
     </g>
   )
 }
 
-Input.defaultProps = {
+Connector.defaultProps = {
   ItemID: "Goku",
   xy: [0, 0],
   anchor: 0,
@@ -132,10 +131,13 @@ Input.defaultProps = {
   textPosOffsetXY: [0, 0],
   varValue: "",
   varName: "",
-  logic: false
+  logic: false,
+  input: false,
+  output: false,
+  innerRef: false
 }
 
-Input.propTypes = {
+Connector.propTypes = {
   ItemID: PropTypes.string,
   xy: PropTypes.arrayOf(PropTypes.number),
   anchor: PropTypes.number,
@@ -147,5 +149,8 @@ Input.propTypes = {
     PropTypes.number
   ]),
   varName: PropTypes.string,
-  logic: PropTypes.bool
+  logic: PropTypes.bool,
+  input: PropTypes.bool,
+  output: PropTypes.bool,
+  innerRef: PropTypes.bool
 }

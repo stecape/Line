@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios'
-import Input from '../components/Anchor/Input'
+import Connector from '../components/Anchor/Connector'
 import Line from '../components/Anchor/Line'
 import Absolut from '../components/Anchor/Absolut'
 import Constant from '../components/Anchor/Constant'
 import Derivative from '../components/Anchor/Derivative'
+import Integrative from '../components/Anchor/Integrative'
 import Typography from '@mui/material/Typography'
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
@@ -108,7 +109,7 @@ export default function AnalogInput (props){
       </Grid>
       <Grid item xs={12}>
         <svg width="100%" height="100%" overflow="auto" preserveAspectRatio="none">
-          <Input
+          <Connector
             ItemID="c"
             anchor={0}
             xy={[20, 50]}
@@ -117,6 +118,7 @@ export default function AnalogInput (props){
             varName="c"
             varValue={actual.c}
             retAnchors={retAnchors}
+            input
           />
           <Line
             ItemID="l1"
@@ -126,7 +128,7 @@ export default function AnalogInput (props){
             green={true}
             retAnchors={retAnchors}
           />
-          <Input
+          <Connector
             ItemID="Beauty"
             anchor={0}
             xy={getAnchors("l1", 1)}
@@ -136,6 +138,7 @@ export default function AnalogInput (props){
             varValue={bool(actual.beauty)}
             retAnchors={retAnchors}
             logic
+            output
           />
           <Line
             ItemID="l2"
@@ -215,6 +218,21 @@ export default function AnalogInput (props){
             ItemID="der"
             anchor={0}
             xy={getAnchors("constl3", 1)}
+            green={true}
+            retAnchors={retAnchors}
+          />
+          <Line
+            ItemID="lder"
+            anchor={0}
+            x1y1={getAnchors("der", 2)}
+            x2y2={getAnchors("der", 2,[12, 0])}
+            green={true}
+            retAnchors={retAnchors}
+          />
+          <Integrative
+            ItemID="int"
+            anchor={0}
+            xy={getAnchors("lder", 1)}
             green={true}
             retAnchors={retAnchors}
           />

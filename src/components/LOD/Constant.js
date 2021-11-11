@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import '../App.css'
+import '../../App.css'
 
 
-export default class InternalReference extends Component {
+export default class Constant extends Component {
   constructor(props){
     super(props)
 
@@ -15,14 +15,13 @@ export default class InternalReference extends Component {
   static getDerivedStateFromProps(nextProps, prevState){
     return {
       green: nextProps.green,
-      varName: nextProps.varName,
       varValue: nextProps.varValue,
     }
   }
 
   render() {
 
-    var ID = "InternalReference" + Math.trunc(Math.random()*1000) + Math.trunc(Math.random()*1000)
+    var ID = "Costant" + Math.trunc(Math.random()*1000) + Math.trunc(Math.random()*1000)
 
     var decodeEntities = (function() {
       // this prevents any overhead from creating the object each time
@@ -60,47 +59,38 @@ export default class InternalReference extends Component {
       fill: 'gray',
       stroke: 'gray'
     }
-
-    var cx = (Number(this.props.x) + 12).toString()
-    var cy = (Number(this.props.y) + 4).toString()
-  	return(
-  		<g>
-				<defs>
+    
+    return(
+      <g>
+        <defs>
           <g id={ID}>
-            <rect width="24" height="8" fillOpacity="0.3" />
+            <rect width={this.props.w} height="10" fillOpacity="0.0" />
           </g>
         </defs>
         <use x={this.props.x} y={this.props.y} href={ '#' + ID } style={style(this.state.green)} />
-        <rect x={this.props.x} y={this.props.y} width="24" height="8" fill="transparent" cursor="pointer" onClick={() => this.setState({toggle: !this.state.toggle})} />
-        { this.state.toggle && <text x={this.props.x + this.props.textPosOffsetX} y={this.props.y-4 + this.props.textPosOffsetY} style={text}>{decodeEntities(this.state.varValue)}</text> }
-        { this.state.toggle && <text x={this.props.x + this.props.textPosOffsetX} y={this.props.y-14 + this.props.textPosOffsetY} style={text}>{this.state.varName}</text> }
-        <circle cx={cx} cy={cy} r="3" stroke={this.props.color} strokeWidth="1" fill={this.props.color} />
-  		</g>
-  	)
+        <rect x={this.props.x} y={this.props.y} width={this.props.w} height="10" fill="transparent" />
+        <text x={this.props.x + 2} y={this.props.y + 7} style={text}>{decodeEntities(this.props.varValue)}</text>
+      </g>
+    )
   }
 }
 
-InternalReference.defaultProps = {
+Constant.defaultProps = {
   x: 0,
   y: 0,
+  w: 24,
   green: false,
-  textPosOffsetX: 0,
-  textPosOffsetY: 0,
-  varValue: "",
-  varName: "",
-  color: "rgba(124,240,10,0)"
+  varValue: ""
 }
 
-InternalReference.propTypes = {
+Constant.propTypes = {
   x: PropTypes.number,
   y: PropTypes.number,
+  w: PropTypes.number,
   green: PropTypes.bool,
-  textPosOffsetX: PropTypes.number,
-  textPosOffsetY: PropTypes.number,
   varValue: PropTypes.oneOfType([
     PropTypes.string,
-    PropTypes.bool
-  ]),
-  varName: PropTypes.string,
-  color: PropTypes.string
+    PropTypes.bool,
+    PropTypes.number
+  ])
 }

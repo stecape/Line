@@ -91,8 +91,6 @@ export default function Derivative (props) {
     }
 
   }, [xy, green, anchor, props]);
-
-  decodeEntities()  
     
   return(
     <g>
@@ -102,7 +100,7 @@ export default function Derivative (props) {
           <text x="4" y="8" style={textStyle}>&part;</text>
         </g>
       </defs>
-      <use x={getCoord(props.anchor, xy[0], xy[1])[0]} y={getCoord(props.anchor, xy[0], xy[1])[1]} href={ '#' + props.ItemID } style={blockStyle(green)} />
+      <use x={getCoord(anchor, xy[0], xy[1])[0]} y={getCoord(anchor, xy[0], xy[1])[1]} href={ '#' + props.ItemID } style={blockStyle(green)} />
     </g>
   )
 }
