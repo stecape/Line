@@ -110,7 +110,7 @@ export default function Constant (props) {
     <g>
       <defs>
         <g id={props.ItemID}>
-          <rect width={w} height="12" fillOpacity="0.0" cursor="pointer"/>
+          <rect width={w} height="12" fillOpacity="0.05" cursor="pointer"/>
         </g>
       </defs>
       <use x={getCoord(anchor, xy[0], xy[1], w)[0]} y={getCoord(anchor, xy[0], xy[1], w)[1]} href={ '#' + props.ItemID } style={blockStyle(green)} onClick={() => setToggle(!toggle)}/>

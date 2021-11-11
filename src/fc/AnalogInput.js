@@ -6,6 +6,7 @@ import Absolut from '../components/Anchor/Absolut'
 import Constant from '../components/Anchor/Constant'
 import Derivative from '../components/Anchor/Derivative'
 import Integrative from '../components/Anchor/Integrative'
+import TestPoint from '../components/Anchor/TestPoint'
 import Typography from '@mui/material/Typography'
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
@@ -234,6 +235,24 @@ export default function AnalogInput (props){
             anchor={0}
             xy={getAnchors("lder", 1)}
             green={true}
+            retAnchors={retAnchors}
+          />
+          <Line
+            ItemID="lint"
+            anchor={0}
+            x1y1={getAnchors("int", 2)}
+            x2y2={getAnchors("int", 2,[12, 0])}
+            green={true}
+            retAnchors={retAnchors}
+          />
+          <TestPoint
+            ItemID="Test"
+            anchor={0}
+            xy={getAnchors("lint", 1)}
+            green={true}
+            textPosOffsetXY={[0, 0]}
+            varName="g"
+            varValue={actual.g}
             retAnchors={retAnchors}
           />
         </svg>

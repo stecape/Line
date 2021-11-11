@@ -96,11 +96,11 @@ export default function Absolut (props) {
     <g>
       <defs>
         <g id={props.ItemID}>
-          <rect width="12" height="12" fill="none" />
           <line x1="2" y1="2" x2="6" y2="6" />
           <line x1="6" y1="6" x2="10" y2="2" />
           <line x1="6" y1="2" x2="6" y2="10" />
           <line x1="2" y1="6" x2="10" y2="6" />
+          <rect width="12" height="12" fillOpacity="0.05" cursor="pointer"/>
         </g>
       </defs>
       <use x={getCoord(anchor, xy[0], xy[1])[0]} y={getCoord(anchor, xy[0], xy[1])[1]} href={ '#' + props.ItemID } style={blockStyle(green)} />

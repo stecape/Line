@@ -96,8 +96,8 @@ export default function Derivative (props) {
     <g>
       <defs>
         <g id={props.ItemID}>
-          <rect width="12" height="12" fill="none" />
           <text x="4" y="8" style={textStyle}>&part;</text>
+          <rect width="12" height="12" fillOpacity="0.05" cursor="pointer"/>
         </g>
       </defs>
       <use x={getCoord(anchor, xy[0], xy[1])[0]} y={getCoord(anchor, xy[0], xy[1])[1]} href={ '#' + props.ItemID } style={blockStyle(green)} />
