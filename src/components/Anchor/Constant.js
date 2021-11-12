@@ -1,74 +1,12 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types'
 import '../../App.css'
-import {blockStyle, textStyle, decodeEntities} from '../common.js'
-
-var anchorsSet = (anchor, x, y, w) => {
-  switch (anchor) {
-    case 0:
-      return [
-        [x, y],
-        [x + (w/2), y - 6],
-        [x + w, y],
-        [x + (w/2), y + 6]
-      ];
-
-    case 1:
-      return [
-        [x - (w/2), y + 6],
-        [x, y],
-        [x + (w/2), y + 6],
-        [x, y + 12]
-      ];
-
-    case 2:
-      return [
-        [x - w, y],
-        [x - (w/2), y - 6],
-        [x, y],
-        [x - (w/2), y + 6]
-      ];
-
-    case 3:
-      return [
-        [x - (w/2), y - 6],
-        [x, y - 12],
-        [x + (w/2), y - 6],
-        [x, y]
-      ];
-
-    default:
-      return [
-        [x, y],
-        [x, y],
-        [x, y],
-        [x, y]
-      ];
-  }
-};
-
-var getCoord = (anchor, x, y, w) => {
-  switch (anchor) {
-    case 0:
-      return [x, y - 6];
-
-    case 1:
-      return [x - (w/2), y];
-
-    case 2:
-      return [x - w, y - 6];
-
-    case 3:
-      return [x - (w/2), y - 12];
-
-    default:
-      return [x, y];
-  }
-};
+import {blockStyle, textStyle, decodeEntities, dim, anchorsSet, getCoord} from '../common.js'
 
 export default function Constant (props) {
   const [xy, setXy] = useState([-1, -1]);
-  const [w, setW] = useState(42);
+  const [h, setH] = useState(2*dim.base);
+  const [w, setW] = useState(dim.base/6*42);
   const [green, setGreen] = useState(false);
   const [varValue, setVarValue] = useState("");
   const [toggle, setToggle] = useState(true);
@@ -80,15 +18,15 @@ export default function Constant (props) {
       setXy(props.xy);
       props.retAnchors(
         props.ItemID,
-        anchorsSet(props.anchor, props.xy[0], props.xy[1], w)
+        anchorsSet(props.anchor, props.xy[0], props.xy[1], w, h)
       );
     }
 
-    if (w !== props.w) {
-      setW(props.w);
+    if (w !== dim.base/6*props.w) {
+      setW(dim.base/6*props.w);
       props.retAnchors(
         props.ItemID,
-        anchorsSet(props.anchor, props.xy[0], props.xy[1], props.w)
+        anchorsSet(props.anchor, props.xy[0], props.xy[1], dim.base/6*props.w, h)
       );
     }
 
@@ -110,11 +48,11 @@ export default function Constant (props) {
     <g>
       <defs>
         <g id={props.ItemID}>
-          <rect width={w} height="12" fillOpacity="0.05" cursor="pointer"/>
+          <rect width={w} height={h} fillOpacity="0.05" cursor="pointer"/>
         </g>
       </defs>
-      <use x={getCoord(anchor, xy[0], xy[1], w)[0]} y={getCoord(anchor, xy[0], xy[1], w)[1]} href={ '#' + props.ItemID } style={blockStyle(green)} onClick={() => setToggle(!toggle)}/>
-      <text x={getCoord(0, xy[0], xy[1], w)[0] + 2} y={getCoord(0, xy[0], xy[1], w)[1] + 8} style={textStyle} cursor="pointer">{decodeEntities(varValue)}</text>
+      <use x={getCoord(anchor, xy[0], xy[1], w, h)[0]} y={getCoord(anchor, xy[0], xy[1], w, h)[1]} href={ '#' + props.ItemID } style={blockStyle(green)} onClick={() => setToggle(!toggle)}/>
+      <text x={getCoord(0, xy[0], xy[1], w, h)[0] + 2*dim.base/6} y={getCoord(0, xy[0], xy[1], w, h)[1] + 9*dim.base/6} style={textStyle} cursor="pointer">{decodeEntities(varValue)}</text>
     </g>
   )
 }

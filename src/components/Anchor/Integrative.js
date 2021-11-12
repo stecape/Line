@@ -1,73 +1,11 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types'
 import '../../App.css'
-import {blockStyle, textStyle, decodeEntities} from '../common.js'
-
-
-var anchorsSet = (anchor, x, y) => {
-  switch (anchor) {
-    case 0:
-      return [
-        [x, y],
-        [x + 6, y - 6],
-        [x + 12, y],
-        [x + 6, y + 6]
-      ];
-
-    case 1:
-      return [
-        [x - 6, y + 6],
-        [x, y],
-        [x + 6, y + 6],
-        [x, y + 12]
-      ];
-
-    case 2:
-      return [
-        [x - 12, y],
-        [x - 6, y - 6],
-        [x, y],
-        [x - 6, y + 6]
-      ];
-
-    case 3:
-      return [
-        [x - 6, y - 6],
-        [x, y - 12],
-        [x + 6, y - 6],
-        [x, y]
-      ];
-
-    default:
-      return [
-        [x, y],
-        [x, y],
-        [x, y],
-        [x, y]
-      ];
-  }
-};
-
-var getCoord = (anchor, x, y) => {
-  switch (anchor) {
-    case 0:
-      return [x, y - 6];
-
-    case 1:
-      return [x - 6, y];
-
-    case 2:
-      return [x - 12, y - 6];
-
-    case 3:
-      return [x - 6, y - 12];
-
-    default:
-      return [x, y];
-  }
-};
+import {blockStyle, textStyle, decodeEntities, dim, anchorsSet, getCoord} from '../common.js'
 
 export default function Integrative (props) {
+  const [h, setH] = useState(2*dim.base);
+  const [w, setW] = useState(2*dim.base);
   const [xy, setXy] = useState([-1, -1]);
   const [green, setGreen] = useState(false);
   const [anchor, setAnchor] = useState(0);
@@ -78,7 +16,7 @@ export default function Integrative (props) {
       setXy(props.xy);
       props.retAnchors(
         props.ItemID,
-        anchorsSet(props.anchor, props.xy[0], props.xy[1])
+        anchorsSet(props.anchor, props.xy[0], props.xy[1],w, h)
       );
     }
 
@@ -96,11 +34,11 @@ export default function Integrative (props) {
     <g>
       <defs>
         <g id={props.ItemID}>
-          <text x="4" y="8" style={textStyle}>&int;</text>
-          <rect width="12" height="12" fillOpacity="0.05" cursor="pointer"/>
+          <text x={w/3} y={h/3*2} style={textStyle}>&int;</text>
+          <rect width={w} height={h} fillOpacity="0.05" cursor="pointer"/>
         </g>
       </defs>
-      <use x={getCoord(anchor, xy[0], xy[1])[0]} y={getCoord(anchor, xy[0], xy[1])[1]} href={ '#' + props.ItemID } style={blockStyle(green)} />
+      <use x={getCoord(anchor, xy[0], xy[1], w, h)[0]} y={getCoord(anchor, xy[0], xy[1], w, h)[1]} href={ '#' + props.ItemID } style={blockStyle(green)} />
     </g>
   )
 }

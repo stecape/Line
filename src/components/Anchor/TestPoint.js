@@ -1,72 +1,11 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types'
 import '../../App.css'
-import {blockStyle, textStyle, decodeEntities} from '../common.js'
-
-var anchorsSet = (anchor, x, y) => {
-  switch (anchor) {
-    case 0:
-      return [
-        [x, y],
-        [x + 6, y - 6],
-        [x + 12, y],
-        [x + 6, y + 6]
-      ];
-
-    case 1:
-      return [
-        [x - 6, y + 6],
-        [x, y],
-        [x + 6, y + 6],
-        [x, y + 12]
-      ];
-
-    case 2:
-      return [
-        [x - 12, y],
-        [x - 6, y - 6],
-        [x, y],
-        [x - 6, y + 6]
-      ];
-
-    case 3:
-      return [
-        [x - 6, y - 6],
-        [x, y - 12],
-        [x + 6, y - 6],
-        [x, y]
-      ];
-
-    default:
-      return [
-        [x, y],
-        [x, y],
-        [x, y],
-        [x, y]
-      ];
-  }
-};
-
-var getCoord = (anchor, x, y) => {
-  switch (anchor) {
-    case 0:
-      return [x, y - 6];
-
-    case 1:
-      return [x - 6, y];
-
-    case 2:
-      return [x - 12, y - 6];
-
-    case 3:
-      return [x - 6, y - 12];
-
-    default:
-      return [x, y];
-  }
-};
+import {blockStyle, textStyle, decodeEntities, dim, anchorsSet, getCoord} from '../common.js'
 
 export default function TestPoint (props) {
+  const [h, setH] = useState(2*dim.base);
+  const [w, setW] = useState(2*dim.base);
   const [xy, setXy] = useState([-1, -1]);
   const [green, setGreen] = useState(false);
   const [textPosOffsetXY, setTextPosOffsetXY] = useState([0, 0]);
@@ -80,7 +19,7 @@ export default function TestPoint (props) {
       setXy(props.xy);
       props.retAnchors(
         props.ItemID,
-        anchorsSet(props.anchor, props.xy[0], props.xy[1])
+        anchorsSet(props.anchor, props.xy[0], props.xy[1], w, h)
       );
     }
 
@@ -110,14 +49,14 @@ export default function TestPoint (props) {
     <g>
       <defs>
         <g id={props.ItemID}>
-          <line x1="0" y1="0" x2="12" y2="12" />
-          <line x1="0" y1="12" x2="12" y2="0" />
-          <rect width="12" height="12" fillOpacity="0.05" cursor="pointer"/>
+          <line x1="0" y1="0" x2={w} y2={h} />
+          <line x1="0" y1={h} x2={w} y2="0" />
+          <rect width={w} height={h} fillOpacity="0.05" cursor="pointer"/>
         </g>
       </defs>
-      <use x={getCoord(anchor, xy[0], xy[1])[0]} y={getCoord(anchor, xy[0], xy[1])[1]} href={ '#' + props.ItemID } style={blockStyle(green)} onClick={() => setToggle(!toggle)}/>
-      { toggle && <text x={getCoord(anchor, xy[0], xy[1])[0] + textPosOffsetXY[0]} y={getCoord(anchor, xy[0], xy[1])[1]-4 + textPosOffsetXY[1]} style={textStyle}>{props.logic ? varValue ? "true" : "false" : decodeEntities(varValue) }</text> }
-      { toggle && <text x={getCoord(anchor, xy[0], xy[1])[0] + textPosOffsetXY[0]} y={getCoord(anchor, xy[0], xy[1])[1]-14 + textPosOffsetXY[1]} style={textStyle}>{varName}</text> }
+      <use x={getCoord(anchor, xy[0], xy[1], w, h)[0]} y={getCoord(anchor, xy[0], xy[1], w, h)[1]} href={ '#' + props.ItemID } style={blockStyle(green)} onClick={() => setToggle(!toggle)}/>
+      { toggle && <text x={getCoord(anchor, xy[0], xy[1], w, h)[0] + textPosOffsetXY[0]*dim.base/6} y={getCoord(anchor, xy[0], xy[1], w, h)[1]-4*dim.base/6 + textPosOffsetXY[1]*dim.base/6} style={textStyle}>{props.logic ? varValue ? "true" : "false" : decodeEntities(varValue) }</text> }
+      { toggle && <text x={getCoord(anchor, xy[0], xy[1], w, h)[0] + textPosOffsetXY[0]*dim.base/6} y={getCoord(anchor, xy[0], xy[1], w, h)[1]-14*dim.base/6 + textPosOffsetXY[1]*dim.base/6} style={textStyle}>{varName}</text> }
     </g>
   )
 }
