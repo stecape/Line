@@ -4,6 +4,7 @@ import '../../App.css'
 import {blockStyle, textStyle, decodeEntities, dim, anchorsSet, getCoord} from '../common.js'
 
 export default function Connector (props) {
+  const [base, setBase] = useState(dim.base);
   const [h, setH] = useState(dim.base/3*4);
   const [w, setW] = useState(4*dim.base);
   const [xy, setXy] = useState([-1, -1]);
@@ -14,18 +15,34 @@ export default function Connector (props) {
   const [toggle, setToggle] = useState(true);
   const [anchor, setAnchor] = useState(0);
   
+  //stile del testo dei componenti
+  const textStyleOvr = {
+    ...textStyle,
+    fontSize: base*1.4
+  }
 
   useEffect(() => {
+
+    if (base !== props.base) {
+      setBase(props.base);
+      setW(4*props.base);
+      setH(props.base/3*4);
+      props.retAnchors(
+        props.ItemID,
+        anchorsSet(anchor, xy[0], xy[1], 4*props.base, props.base/3*4)
+      );
+    }
+
     if (JSON.stringify(xy) !== JSON.stringify(props.xy)) {
       setXy(props.xy);
       props.retAnchors(
         props.ItemID,
-        anchorsSet(props.anchor, props.xy[0], props.xy[1], w, h)
+        anchorsSet(anchor, props.xy[0], props.xy[1], w, h)
       );
     }
 
-    if (JSON.stringify(textPosOffsetXY) !== JSON.stringify(props.textPosOffsetXY)) {
-      setTextPosOffsetXY(props.textPosOffsetXY);
+    if (textPosOffsetXY[0] !== props.textPosOffsetXY[0]*base/dim.base || textPosOffsetXY[1] !== props.textPosOffsetXY[1]*base/dim.base) {
+      setTextPosOffsetXY([props.textPosOffsetXY[0]*base/dim.base,props.textPosOffsetXY[1]*base/dim.base]);
     }
 
     if (green !== props.green) {
@@ -44,7 +61,7 @@ export default function Connector (props) {
       setAnchor(props.anchor);
     }
 
-  }, [xy, textPosOffsetXY, green, varName, varValue, anchor, props]);
+  }, [xy, textPosOffsetXY, green, varName, varValue, anchor, base, props]);
 
   return(
     <g>
@@ -56,13 +73,14 @@ export default function Connector (props) {
         </g>
       </defs>
       <use x={getCoord(anchor, xy[0], xy[1], w, h)[0]} y={getCoord(anchor, xy[0], xy[1], w, h)[1]} href={ '#' + props.ItemID } style={blockStyle(green)} onClick={() => setToggle(!toggle)}/>
-      { toggle && <text x={getCoord(anchor, xy[0], xy[1], w, h)[0] + textPosOffsetXY[0]*dim.base/6} y={getCoord(anchor, xy[0], xy[1], w, h)[1]-4*dim.base/6 + textPosOffsetXY[1]*dim.base/6} style={textStyle}>{props.logic ? varValue ? "true" : "false" : decodeEntities(varValue) }</text> }
-      { toggle && <text x={getCoord(anchor, xy[0], xy[1], w, h)[0] + textPosOffsetXY[0]*dim.base/6} y={getCoord(anchor, xy[0], xy[1], w, h)[1]-14*dim.base/6 + textPosOffsetXY[1]*dim.base/6} style={textStyle}>{varName}</text> }
+      { toggle && <text x={getCoord(anchor, xy[0], xy[1], w, h)[0] + textPosOffsetXY[0]} y={getCoord(anchor, xy[0], xy[1], w, h)[1]-4*base/dim.base + textPosOffsetXY[1]} style={textStyleOvr}>{props.logic ? varValue ? "true" : "false" : decodeEntities(varValue) }</text> }
+      { toggle && <text x={getCoord(anchor, xy[0], xy[1], w, h)[0] + textPosOffsetXY[0]} y={getCoord(anchor, xy[0], xy[1], w, h)[1]-14*base/dim.base + textPosOffsetXY[1]} style={textStyleOvr}>{varName}</text> }
     </g>
   )
 }
 
 Connector.defaultProps = {
+  base: dim.base,
   ItemID: "Goku",
   xy: [0, 0],
   anchor: 0,
@@ -77,6 +95,7 @@ Connector.defaultProps = {
 }
 
 Connector.propTypes = {
+  base: PropTypes.number,
   ItemID: PropTypes.string,
   xy: PropTypes.arrayOf(PropTypes.number),
   anchor: PropTypes.number,

@@ -4,19 +4,36 @@ import '../../App.css'
 import {blockStyle, textStyle, decodeEntities, dim, anchorsSet, getCoord} from '../common.js'
 
 export default function Absolut (props) {
-  const [h, setH] = useState(2*dim.base);
-  const [w, setW] = useState(2*dim.base);
+  const [base, setBase] = useState(dim.base);
+  const [h, setH] = useState(2*props.base);
+  const [w, setW] = useState(2*props.base);
   const [xy, setXy] = useState([-1, -1]);
   const [green, setGreen] = useState(false);
   const [anchor, setAnchor] = useState(0);
-
+  
+  //stile del testo dei componenti
+  const textStyleOvr = {
+    ...textStyle,
+    fontSize: base*1.4
+  }
 
   useEffect(() => {
+
+    if (base !== props.base) {
+      setBase(props.base);
+      setW(2*props.base);
+      setH(2*props.base);
+      props.retAnchors(
+        props.ItemID,
+        anchorsSet(anchor, xy[0], xy[1], 2*props.base, 2*props.base)
+      );
+    }
+
     if (JSON.stringify(xy) !== JSON.stringify(props.xy)) {
       setXy(props.xy);
       props.retAnchors(
         props.ItemID,
-        anchorsSet(props.anchor, props.xy[0], props.xy[1], w, h)
+        anchorsSet(anchor, props.xy[0], props.xy[1], w, h)
       );
     }
 
@@ -28,7 +45,7 @@ export default function Absolut (props) {
       setAnchor(props.anchor);
     }
 
-  }, [xy, green, anchor, props]);
+  }, [xy, green, anchor, base, props]);
 
   return(
     <g>
@@ -47,6 +64,7 @@ export default function Absolut (props) {
 }
 
 Absolut.defaultProps = {
+  base: dim.base,
   ItemID: "Goku",
   xy: [0, 0],
   anchor: 0,
@@ -54,6 +72,7 @@ Absolut.defaultProps = {
 }
 
 Absolut.propTypes = {
+  base: PropTypes.number,
   ItemID: PropTypes.string,
   xy: PropTypes.arrayOf(PropTypes.number),
   anchor: PropTypes.number,

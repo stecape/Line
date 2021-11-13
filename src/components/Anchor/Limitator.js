@@ -3,14 +3,12 @@ import PropTypes from 'prop-types'
 import '../../App.css'
 import {blockStyle, textStyle, decodeEntities, dim, anchorsSet, getCoord} from '../common.js'
 
-export default function Constant (props) {
+export default function Limitator (props) {
   const [base, setBase] = useState(dim.base);
-  const [xy, setXy] = useState([-1, -1]);
   const [h, setH] = useState(2*dim.base);
-  const [w, setW] = useState(dim.base*7);
+  const [w, setW] = useState(2*dim.base);
+  const [xy, setXy] = useState([-1, -1]);
   const [green, setGreen] = useState(false);
-  const [varValue, setVarValue] = useState("");
-  const [toggle, setToggle] = useState(true);
   const [anchor, setAnchor] = useState(0);
   
   //stile del testo dei componenti
@@ -23,11 +21,11 @@ export default function Constant (props) {
 
     if (base !== props.base) {
       setBase(props.base);
+      setW(2*props.base);
       setH(2*props.base);
-      setW(props.base/dim.base*props.w);
       props.retAnchors(
         props.ItemID,
-        anchorsSet(anchor, xy[0], xy[1], props.base/dim.base*props.w, 2*props.base)
+        anchorsSet(anchor, xy[0], xy[1], 2*props.base, 2*props.base)
       );
     }
 
@@ -39,61 +37,50 @@ export default function Constant (props) {
       );
     }
 
-    if (w !== base/dim.base*props.w) {
-      setW(base/dim.base*props.w);
-      props.retAnchors(
-        props.ItemID,
-        anchorsSet(anchor, xy[0], xy[1], base/dim.base*props.w, h)
-      );
-    }
-
     if (green !== props.green) {
       setGreen(props.green);
-    }
-
-    if (varValue !== props.varValue) {
-      setVarValue(props.varValue);
     }
 
     if (anchor !== props.anchor) {
       setAnchor(props.anchor);
     }
 
-  }, [xy, green, varValue, anchor, w, base, props]);
-  
+  }, [xy, green, anchor, base, props]);
+
   return(
     <g>
       <defs>
-        <g id={props.ItemID}>
+        <g id={props.ItemID} transform={"rotate(" + props.rotate +" 6 6)"} >
+        <line x1={w/6} y1={h/6} x2={w/3} y2={h/3} />
+            <line x1={w/3} y1={h/3} x2={w/3*2} y2={h/3} />
+            <line x1={w/3*2} y1={h/3} x2={w/6*5} y2={h/6} />
+            <line x1="0" y1={h/2} x2={w} y2={h/2} />
+            <line x1={w/6} y1={h/6*5} x2={w/3} y2={h/3*2} />
+            <line x1={w/3} y1={h/3} x2={w/3*2} y2={h/3} />
+            <line x1={w/3} y1={h/3*2} x2={w/3*2} y2={h/3*2} />
+            <line x1={w/3*2} y1={h/3*2} x2={w/6*5} y2={h/6*5} />
           <rect width={w} height={h} fillOpacity="0.05" cursor="pointer"/>
         </g>
       </defs>
-      <use x={getCoord(anchor, xy[0], xy[1], w, h)[0]} y={getCoord(anchor, xy[0], xy[1], w, h)[1]} href={ '#' + props.ItemID } style={blockStyle(green)} onClick={() => setToggle(!toggle)}/>
-      <text x={getCoord(0, xy[0], xy[1], w, h)[0] + 2*base/dim.base} y={getCoord(0, xy[0], xy[1], w, h)[1] + 9*base/dim.base} style={textStyleOvr} cursor="pointer">{decodeEntities(varValue)}</text>
+      <use x={getCoord(anchor, xy[0], xy[1], w, h)[0]} y={getCoord(anchor, xy[0], xy[1], w, h)[1]} href={ '#' + props.ItemID } style={blockStyle(green)} />
     </g>
   )
 }
 
-Constant.defaultProps = {
+Limitator.defaultProps = {
   base: dim.base,
   ItemID: "Goku",
   xy: [0, 0],
-  w: 2*dim.base,
   anchor: 0,
   green: false,
-  varValue: "",
-  logic: false
+  rotate: 0
 }
 
-Constant.propTypes = {
+Limitator.propTypes = {
   base: PropTypes.number,
   ItemID: PropTypes.string,
   xy: PropTypes.arrayOf(PropTypes.number),
-  w: PropTypes.number,
   anchor: PropTypes.number,
   green: PropTypes.bool,
-  varValue: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.bool,
-  ])
+  rotate: PropTypes.number
 }

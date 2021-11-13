@@ -4,13 +4,15 @@ import Connector from '../components/Anchor/Connector'
 import Line from '../components/Anchor/Line'
 import Absolut from '../components/Anchor/Absolut'
 import Constant from '../components/Anchor/Constant'
-import Derivative from '../components/Anchor/Derivative'
-import Integrative from '../components/Anchor/Integrative'
+import Char from '../components/Anchor/Char'
 import TestPoint from '../components/Anchor/TestPoint'
+import Limitator from '../components/Anchor/Limitator'
 import Typography from '@mui/material/Typography'
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 import Grid from '@mui/material/Grid'
+import {blockStyle, textStyle, decodeEntities, dim, anchorsSet, getCoord, getAnchors} from '../components/common.js'
+import { ChargingStationRounded } from "@mui/icons-material";
 
 export default function AnalogInput (props){
 
@@ -26,6 +28,7 @@ export default function AnalogInput (props){
   const [selection, setSelection] = useState("");
   const [options, setOptions] = useState([]);
   const [actual, setActual] = useState({});
+  const [base, setBase] = useState(dim.base);
 
   var actualData = axios.create({ baseURL: 'http://localhost:3000/awp/React/' });
   const Dataurl = 'data/Analog%20Input.html'
@@ -33,20 +36,6 @@ export default function AnalogInput (props){
 
   const retAnchors = (name, value) => {
     setAnchors((prevState) => ({ ...prevState, [name]: value }));
-  };
-
-  const getAnchors = (ItemID, anchor, offset) => {
-    var dx = 0
-    var dy = 0
-    if (offset) {
-      dx = offset[0]
-      dy = offset[1]
-    }
-    try {
-      return [anchors[ItemID][anchor][0]+dx,anchors[ItemID][anchor][1]+dy];
-    } catch {
-      return [10, 10];
-    }
   };
 
   const axiosFunc = new Promise((onSuccess, onError) => {
@@ -109,10 +98,11 @@ export default function AnalogInput (props){
         </Select>
       </Grid>
       <Grid item xs={12}>
-        <svg width="100%" height="100%" overflow="auto" preserveAspectRatio="none">
+        <svg width="100%" height="1000" overflow="auto" preserveAspectRatio="none">
           <Connector
             ItemID="c"
             anchor={0}
+            base={base}
             xy={[20, 50]}
             green={true}
             textPosOffsetXY={[0, 0]}
@@ -122,17 +112,19 @@ export default function AnalogInput (props){
             input
           />
           <Line
+            base={base}
             ItemID="l1"
             anchor={0}
-            x1y1={getAnchors("c", 2)}
-            x2y2={getAnchors("c", 2,[30, 0])}
+            x1y1={getAnchors(base, anchors, "c", 2)}
+            x2y2={getAnchors(base, anchors, "c", 2,[30, 0])}
             green={true}
             retAnchors={retAnchors}
           />
           <Connector
             ItemID="Beauty"
             anchor={0}
-            xy={getAnchors("l1", 1)}
+            base={base}
+            xy={getAnchors(base, anchors, "l1", 1)}
             green={true}
             textPosOffsetXY={[0, 0]}
             varName="beauty"
@@ -142,118 +134,181 @@ export default function AnalogInput (props){
             output
           />
           <Line
+            base={base}
             ItemID="l2"
             anchor={0}
-            x1y1={getAnchors("Beauty", 2)}
-            x2y2={getAnchors("Beauty", 2,[30, 0])}
+            x1y1={getAnchors(base, anchors, "Beauty", 2)}
+            x2y2={getAnchors(base, anchors, "Beauty", 2,[30, 0])}
             green={true}
             retAnchors={retAnchors}
           />
           <Line
+            base={base}
             ItemID="l2a"
             anchor={0}
-            x1y1={getAnchors("l2", 1)}
-            x2y2={getAnchors("l2", 1,[0, 25])}
+            x1y1={getAnchors(base, anchors, "l2", 1)}
+            x2y2={getAnchors(base, anchors, "l2", 1,[0, 25])}
             green={true}
             retAnchors={retAnchors}
             startPoint
           />
           <Line
+            base={base}
             ItemID="l2b"
             anchor={0}
-            x1y1={getAnchors("l2a", 1)}
-            x2y2={getAnchors("l2a", 1,[20, 0])}
+            x1y1={getAnchors(base, anchors, "l2a", 1)}
+            x2y2={getAnchors(base, anchors, "l2a", 1,[20, 0])}
             green={true}
             retAnchors={retAnchors}
             arrow
           />
           <Absolut
+            base={base}
             ItemID="abs"
             anchor={0}
-            xy={getAnchors("l2b", 1)}
+            xy={getAnchors(base, anchors, "l2b", 1)}
             green={true}
             retAnchors={retAnchors}
           />
           <Line
+            base={base}
             ItemID="labs"
             anchor={0}
-            x1y1={getAnchors("abs", 2)}
-            x2y2={getAnchors("abs", 2,[24, 0])}
+            x1y1={getAnchors(base, anchors, "abs", 2)}
+            x2y2={getAnchors(base, anchors, "abs", 2,[24, 0])}
             green={true}
             retAnchors={retAnchors}
           />
           <Constant
+            base={base}
             ItemID="const"
             anchor={0}
-            xy={getAnchors("labs", 1)}
+            xy={getAnchors(base, anchors, "labs", 1)}
             w={50}
             varValue={"3.1415926"}
             green={false}
             retAnchors={retAnchors}
           />
           <Line
+            base={base}
             ItemID="constl1"
             anchor={0}
-            x1y1={getAnchors("const", 2)}
-            x2y2={getAnchors("const", 2,[60, 0])}
+            x1y1={getAnchors(base, anchors, "const", 2)}
+            x2y2={getAnchors(base, anchors, "const", 2,[60, 0])}
             green={true}
             retAnchors={retAnchors}
           />
           <Line
+            base={base}
             ItemID="constl2"
             anchor={0}
-            x1y1={getAnchors("constl1", 1)}
-            x2y2={getAnchors("constl1", 1,[0, 12])}
+            x1y1={getAnchors(base, anchors, "constl1", 1)}
+            x2y2={getAnchors(base, anchors, "constl1", 1,[0, 12])}
             green={true}
             retAnchors={retAnchors}
           />
           <Line
+            base={base}
             ItemID="constl3"
             anchor={0}
-            x1y1={getAnchors("constl2", 1)}
-            x2y2={getAnchors("constl2", 1,[12, 0])}
+            x1y1={getAnchors(base, anchors, "constl2", 1)}
+            x2y2={getAnchors(base, anchors, "constl2", 1,[12, 0])}
             green={true}
             retAnchors={retAnchors}
           />
-          <Derivative
+          <Char
+            base={base}
             ItemID="der"
             anchor={0}
-            xy={getAnchors("constl3", 1)}
+            xy={getAnchors(base, anchors, "constl3", 1)}
             green={true}
             retAnchors={retAnchors}
+            cont="&part;"
           />
           <Line
+            base={base}
             ItemID="lder"
             anchor={0}
-            x1y1={getAnchors("der", 2)}
-            x2y2={getAnchors("der", 2,[12, 0])}
+            x1y1={getAnchors(base, anchors, "der", 2)}
+            x2y2={getAnchors(base, anchors, "der", 2,[12, 0])}
             green={true}
             retAnchors={retAnchors}
           />
-          <Integrative
+          <Char
+            base={base}
             ItemID="int"
             anchor={0}
-            xy={getAnchors("lder", 1)}
+            xy={getAnchors(base, anchors, "lder", 1)}
             green={true}
             retAnchors={retAnchors}
+            cont="&int;"
           />
           <Line
+            base={base}
             ItemID="lint"
             anchor={0}
-            x1y1={getAnchors("int", 2)}
-            x2y2={getAnchors("int", 2,[12, 0])}
+            x1y1={getAnchors(base, anchors, "int", 2)}
+            x2y2={getAnchors(base, anchors, "int", 2,[12, 0])}
             green={true}
             retAnchors={retAnchors}
           />
           <TestPoint
+            base={base}
             ItemID="Test"
             anchor={0}
-            xy={getAnchors("lint", 1)}
+            xy={getAnchors(base, anchors, "lint", 1)}
             green={true}
             textPosOffsetXY={[0, 0]}
             varName="g"
             varValue={actual.g}
             retAnchors={retAnchors}
+          />
+          <Line
+            base={base}
+            ItemID="ltp1"
+            anchor={0}
+            x1y1={getAnchors(base, anchors, "Test", 2)}
+            x2y2={getAnchors(base, anchors, "Test", 2,[4, 0])}
+            green={true}
+            retAnchors={retAnchors}
+          />
+          <Line
+            base={base}
+            ItemID="ltp2"
+            anchor={0}
+            x1y1={getAnchors(base, anchors, "ltp1", 1)}
+            x2y2={getAnchors(base, anchors, "ltp1", 1,[0, 36])}
+            green={true}
+            retAnchors={retAnchors}
+          />
+          <Line
+            base={base}
+            ItemID="ltp3"
+            anchor={0}
+            x1y1={getAnchors(base, anchors, "ltp2", 1)}
+            x2y2={getAnchors(base, anchors, "ltp2", 1,[-20, 0])}
+            green={true}
+            retAnchors={retAnchors}
+            arrow
+          />
+          <Limitator
+            base={base}
+            ItemID="Lim"
+            anchor={2}
+            xy={getAnchors(base, anchors, "ltp3", 1)}
+            green={true}
+            textPosOffsetXY={[0, 0]}
+            retAnchors={retAnchors}
+          />
+          <Line
+            base={base}
+            ItemID="llim1"
+            anchor={0}
+            x1y1={getAnchors(base, anchors, "Lim", 0)}
+            x2y2={getAnchors(base, anchors, "der", 3)}
+            green={true}
+            retAnchors={retAnchors}
+            arrow
           />
         </svg>
       </Grid>

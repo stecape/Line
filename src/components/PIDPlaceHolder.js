@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import PropTypes from 'prop-types'
-import Limitator from './Limitator'
+import Limitator from './LOD/Limitator'
 import Line from './LOD/Line'
 import '../App.css'
 
