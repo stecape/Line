@@ -28,7 +28,7 @@ export default function AnalogInput (props){
   const [selection, setSelection] = useState("");
   const [options, setOptions] = useState([]);
   const [actual, setActual] = useState({});
-  const [base, setBase] = useState(dim.base);
+  const [base, setBase] = useState(2*dim.base);
 
   var actualData = axios.create({ baseURL: 'http://localhost:3000/awp/React/' });
   const Dataurl = 'data/Analog%20Input.html'
@@ -305,10 +305,29 @@ export default function AnalogInput (props){
             ItemID="llim1"
             anchor={0}
             x1y1={getAnchors(base, anchors, "Lim", 0)}
-            x2y2={getAnchors(base, anchors, "der", 3)}
+            x2y2={getAnchors(base, anchors, "Lim", 0,[-20,0])}
+            green={true}
+            retAnchors={retAnchors}
+          />
+          <Line
+            base={base}
+            ItemID="llim2"
+            anchor={0}
+            x1y1={getAnchors(base, anchors, "llim1", 1)}
+            x2y2={getAnchors(base, anchors, "llim1", 1,[0,28])}
             green={true}
             retAnchors={retAnchors}
             arrow
+          />
+           bisogna centrare il testo di Char in qualche modo
+          <Char
+            base={base}
+            ItemID="inv"
+            anchor={1}
+            xy={getAnchors(base, anchors, "llim2", 1)}
+            green={true}
+            retAnchors={retAnchors}
+            cont="-1"
           />
         </svg>
       </Grid>
